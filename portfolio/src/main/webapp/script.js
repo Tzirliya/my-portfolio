@@ -17,7 +17,7 @@
  */
 function addRandomFact() {
   const facts =
-      ['I own over twenty Rubik\'s Cubes',
+      ['I own over ten types of Rubik\'s Cubes',
       'I memorized one thousand digits of Pi in high school',
       'I\'m a huge fan of the Harry Potter series',
       'I love dogs, but I\'ve only ever owned a goldfish',
@@ -30,5 +30,4 @@ function addRandomFact() {
   // Add it to the page.
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
-  console.log("Hello");
 }
