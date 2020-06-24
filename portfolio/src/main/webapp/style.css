@@ -1,9 +1,88 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 75%;
+  background-color: #e6f2ff;
+  padding: 5px;
 }
 
-#greeting-container {
+#gallery {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #e6f2ff;
+}
+
+* {
+    color: #003366
+}
+
+#fact-container {
   margin-top: 20px;
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+  background-color: #003366;
+  height: 100%; /* Full height */
+  position: fixed; /* Make it stick, even on scroll */
+  overflow: auto; /* Enable scrolling if the sidenav has too much content */
+}
+
+li a {
+  display: block;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #001a33;
+}
+
+.active {
+  background-color: #e6ccff;
+  color: #003366
+}
+
+
+
+
+/* Style the links inside the sidenav */
+#mySidenav a {
+  position: fixed; /* Position them relative to the browser window */
+  left: -100px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 100px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav a:hover {
+  left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a blue background */
+#about-me {
+  top: 20px;
+  background-color: #003366;
+}
+
+#projects {
+  top: 80px;
+  background-color: #004080; /* Blue */
+}
+
+
