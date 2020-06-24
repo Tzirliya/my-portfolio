@@ -107,3 +107,10 @@ li a:hover:not(.active) {
   overflow: hidden;
   background-color: #f1f1f1;
 }
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
