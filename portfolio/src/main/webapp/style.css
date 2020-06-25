@@ -1,9 +1,128 @@
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 650px;
+  width: 75%;
+  background-color: #f2e6ff;
+  padding: 25px;
 }
 
-#greeting-container {
+#gallery {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f2e6ff;
+}
+
+* {
+    font-family: Calibri;
+    color: #003366;
+}
+
+h1 {
+    text-align: center;
+}
+
+a {
+    font-weight: bold; 
+}
+
+#fact-container {
+  margin-top: 20px;
+}
+
+/* use image and center to make images side-by-side and centered*/
+#image {
+  text-align: center;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  display: inline-block;
+}
+
+/* Style the links inside the sidenav */
+#mySidenav a {
+  position: fixed; /* Position them relative to the browser window */
+  left: -100px; /* Position them outside of the screen */
+  transition: 0.3s; /* Add transition on hover */
+  padding: 15px; /* 15px padding */
+  width: 100px; /* Set a specific width */
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
+  color: white; /* White text color */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav a:hover {
+  left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a blue background */
+#about-me {
+  top: 20px;
+  background-color: #003366;
+}
+
+#projects {
+  top: 80px;
+  background-color: #004080; /* Blue */
+}
+
+.collapsible {
+  background-color: #004080;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  height: 50px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 22px;
+}
+
+.active, .collapsible:hover {
+  background-color: #003366;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #e6f2ff;
+  color: #003366
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 100px;
+    padding: 25px;
+}
+
+.footer {
+  position: absolute;
+  padding: 20px;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height:100px;
+  background: #d9b3ff;
   margin-top: 20px;
 }
