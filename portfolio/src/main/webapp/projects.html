@@ -13,8 +13,9 @@
     </div>
     <div id="content">
       <h1>Projects</h1>
-      <h2>Library Database and Application - May 2020</h2>
-      <p>Together with a classmate, we built a library database using MySQL. In the database, we 
+      <button type="button" class="collapsible">Library Database and Application - May 2020</button>
+      <div class="content">
+        <p>Together with a classmate, we built a library database using MySQL. In the database, we 
           included tables for books, ebooks, dvds, cardholders, employees, rooms, and much more. 
           Our database followed the constraints of third normal form. In addition to the database, 
           we created a GUI to interact with it and to perform operations on the database. The GUI 
@@ -22,15 +23,17 @@
           books and dvds, and view personal information (including late fees). Additionally, an 
           employee could login, browse through books, and return books and dvds. <!--A video demonstration 
           of the GUI application can be seen below.-->
-      </p>
-      <!--
-      <video width="480" controls>
-        <source src="vidoes/library_application.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      -->
-      <h2>Analysis of the Correlation between Income Level and Racial Crimes - December 2019</h2>
-      <p>Do people in higher income areas tend to commit crimes against their own race more than 
+        </p>
+        <!--
+        <video width="480" controls>
+          <source src="vidoes/library_application.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        -->
+      </div>
+      <button type="button" class="collapsible">Analysis of the Correlation between Income Level and Racial Crimes - December 2019</button>
+      <div class="content">
+        <p>Do people in higher income areas tend to commit crimes against their own race more than 
           those in in lower income areas? To answer this, I used two data sets. The first was a file 
           6.5 million complaints of poeple in New York City. I used Python 3 to filter and prepare 
           the data, including using a module to transform the provided coordinates into zip codes. 
@@ -40,70 +43,75 @@
           <br>This data was saved into two files. The first file contained aggregated data from poorest, 
           richest, and average areas. This data was used to create an overall picture of the results. 
           See graph below.
-      </p>
-      <a href="images/linux_project_simple_graph.jpg">
-        <img src="images/linux_project_simple_graph.jpg" alt="Simple graph" width="600" class="center"/>
-      </a>
-      <p>The second file contained detailed data on each race and zip code. I used this data to create 
+        </p>
+        <a href="images/linux_project_simple_graph.jpg">
+          <img src="images/linux_project_simple_graph.jpg" alt="Simple graph" width="600" class="center"/>
+        </a>
+        <p>The second file contained detailed data on each race and zip code. I used this data to create 
           six bargraphs - one for each race. Each graph showed the quantity of complaints against each 
           race, and this data was split by income level. See graphs below.
-      </p>
-      <a href="images/linux_project_complex_graphs.jpg">
-        <img src="images/linux_project_complex_graphs.jpg" alt="Complex graphs" width="600" class="center"/>
-      </a>
-      <p>All of these graphs were created using matplotlib, a Python module. This entire project was 
+        </p>
+        <a href="images/linux_project_complex_graphs.jpg">
+          <img src="images/linux_project_complex_graphs.jpg" alt="Complex graphs" width="600" class="center"/>
+        </a>
+        <p>All of these graphs were created using matplotlib, a Python module. This entire project was 
           created and executed in a Linux environment. 
-      </p>
-      <h2>Cuckoo Hash Table Module - May 2019</h2>
-      <p>I developed a cuckoo hash table, a data structure with a constant find time. This data 
+        </p>
+      </div>
+      <button type="button" class="collapsible">Cuckoo Hash Table Module - May 2019</button>
+      <div class="content">
+        <p>I developed a cuckoo hash table, a data structure with a constant find time. This data 
           structure stores key-data pairs by hashing into one of two arrays. If there's already a 
           key-data pair there, then it gets hashed into the other array. Through using two hash 
           tables instead of one, collisions are resolved. It was written in Python 3 and was 
           vigorously tested with Pytest. 
           Click <a href="https://en.wikipedia.org/wiki/Cuckoo_hashing">here</a> for more information 
           about the data structure.
-      </p>
-      <h2>Graphical Spirograph Simulator - December 2018</h2>
-      <p>I developed a graphical simulation of a Spirograph, including choices of gear sizes, 
+        </p>
+      </div>
+      <button type="button" class="collapsible">Graphical Spirograph Simulator - December 2018</button>
+      <div class="content">
+        <p>I developed a graphical simulation of a Spirograph, including choices of gear sizes, 
           hole placement, constant and varying ink color, and many other features. The software 
           realistically visually simulates the progression of the inner gears inside the teeth of 
           the outer ring as an accurate Spirograph pattern is drawn. The entire simulation was 
           written from scratch in Python 3, using a tkinter-based simple graphics library, without 
           the use of any specialized game or animation modules. This project was selected by the 
           CS department chair to appear in the annual project highlight “demo reel”.
-      </p>
-      <a href="https://www.youtube.com/watch?v=l7-TOTkq28g">Stern College 2018 Demo Reel</a>
-      <!--
-      <p>Below is a video demonstration of the spirograph simulator.</p>
-      <video width="480" height="480" controls>
-        <source src="vidoes/spirograph_demo.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      -->
-      <p>Click <a href="spirograph_images.html">here</a> to see a photo collage of the simulator. 
+        </p>
+        <a href="https://www.youtube.com/watch?v=l7-TOTkq28g">Stern College 2018 Demo Reel</a>
+        <!--
+        <p>Below is a video demonstration of the spirograph simulator.</p>
+        <video width="480" height="480" controls>
+          <source src="vidoes/spirograph_demo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        -->
+        <p>Click <a href="spirograph_images.html">here</a> to see a photo collage of the simulator. 
           (Some of these photos were taken at earlier stages of the simulator's creation.)
-      </p>
+        </p>
+      </div>
       <button type="button" class="collapsible">Honorable Mentions</button>
       <div class="content">
-        <h2>Mandelbrot Set</h2>
+        <h3>Mandelbrot Set</h3>
         <p>Out of curiousity, I challenged myself to program a Mandelbrot set. I researched 
           the math behind the Mandelbrot <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">
           here</a>, but I did not reference any code to create it. Below are some images created 
           by different versions of the Mandelbrot sets I programmed.
         </p>
         <a href="images/mandelbrot_set_collage/mandelbrot1.jpg">
-          <img src="images/mandelbrot_set_collage/mandelbrot1.jpg" width="280" class="center"/>
+          <img src="images/mandelbrot_set_collage/mandelbrot1.jpg" width="240" class="center"/>
         </a>
         <a href="images/mandelbrot_set_collage/mandelbrot2.jpg">
-          <img src="images/mandelbrot_set_collage/mandelbrot2.jpg" width="280" class="center"/>
+          <img src="images/mandelbrot_set_collage/mandelbrot2.jpg" width="240" class="center"/>
         </a>
         <a href="images/mandelbrot_set_collage/mandelbrot3.jpg">
-          <img src="images/mandelbrot_set_collage/mandelbrot3.jpg" width="280" class="center"/>
+          <img src="images/mandelbrot_set_collage/mandelbrot3.jpg" width="240" class="center"/>
         </a>
         <a href="images/mandelbrot_set_collage/mandelbrot4.jpg">
-          <img src="images/mandelbrot_set_collage/mandelbrot4.jpg" width="280" class="center"/>
+          <img src="images/mandelbrot_set_collage/mandelbrot4.jpg" width="240" class="center"/>
         </a>
-        <h2>Animated Swirl</h2>
+        <h3>Animated Swirl</h3>
         <p><a href="https://www.youtube.com/watch?v=qhbuKbxJsk8">This video</a> inspired me 
           to recreate the spiral shown at the end of the video. Within the animation, a rounded 
           heart shape can be seen. This shape is nicknamed the heart of mathematics. My animation 
@@ -117,7 +125,7 @@
           Your browser does not support the video tag.
         </video>
         -->
-        <h2>Solve Differential Equations Using Numerical Methods</h2>
+        <h3>Solve Differential Equations Using Numerical Methods</h3>
         <p>I created a program that, given a differential equation on a range, it can solve and 
           graph approximate solutions using three methods: Euler's method, the improved Euler's 
           method, and the Runge-Kutta method. Each of these methods can be given a step-size h, to 
@@ -127,7 +135,7 @@
         <a href="images/numerical_methods_graph.jpg">
           <img src="images/numerical_methods_graph.jpg" width="600" class="center"/>
         </a>
-        <h2>Compare Time of Prim's vs. Kruskall's Algorithm</h2>
+        <h3>Compare Time of Prim's vs. Kruskall's Algorithm</h3>
         <p>Together with a classmate, we compared the time to run Prim's algorithm and 
           Kruskall's algorithm on graphs of various sizes and densities. We came to the 
           conclusion that Prim's algorithm gets significantly slower on larger graphs, but 
