@@ -3,7 +3,7 @@
   margin-right: auto;
   width: 75%;
   background-color: #f2e6ff;
-  padding: 15px;
+  padding: 25px;
 }
 
 #gallery {
@@ -39,36 +39,6 @@ a {
   margin-right: auto;
   display: inline-block;
 }
-
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 15%;
-  background-color: #003366;
-  height: 100%; /* Full height */
-  position: fixed; /* Make it stick, even on scroll */
-  overflow: auto; /* Enable scrolling if the sidenav has too much content */
-}
-
-li a {
-  display: block;
-  color: white;
-  padding: 8px 16px;
-  text-decoration: none;
-}
-
-li a:hover:not(.active) {
-  background-color: #001a33;
-}
-
-.active {
-  background-color: #e6ccff;
-  color: #003366
-}
-
-
-
 
 /* Style the links inside the sidenav */
 #mySidenav a {
@@ -135,9 +105,24 @@ li a:hover:not(.active) {
   color: #003366
 }
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 100px;
+    padding: 25px;
+}
+
 .footer {
+  position: absolute;
   padding: 20px;
   text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height:100px;
   background: #d9b3ff;
   margin-top: 20px;
 }
