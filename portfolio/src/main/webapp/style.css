@@ -4,6 +4,7 @@
   width: 75%;
   background-color: #f2e6ff;
   padding: 25px;
+  border: 5px solid #4d0099;
 }
 
 #gallery {
@@ -13,25 +14,63 @@
 }
 
 * {
-    font-family: Calibri;
-    color: #003366;
+  font-family: Calibri;
+  color: #003366;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
+  font-size: 48px;
 }
 
 a {
-    font-weight: bold; 
+  font-weight: bold; 
+}
+
+.fancy {
+  font-style: italic;
+  font-size: 108px;
+  color: #4d0099;
+  display: inline-block;
+  background-color: #
+}
+
+button:not(.collapsible) {
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  padding: 10px;  
+  cursor: pointer;
+  outline: none;
+  background-color: #004080;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 5px #99ccff;
+}
+
+button:hover:not(.collapsible) {
+  background-color: #003366
+}
+
+button:active:not(.collapsible) {
+  background-color: #003366;
+  box-shadow: 0 5px #0059b3;
+  transform: translateY(5px);
 }
 
 #fact-container {
   margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
 }
 
 /* use image and center to make images side-by-side and centered*/
 #image {
   text-align: center;
+}
+
+.frame {
+    border: 8px inset #d9b3ff;
 }
 
 .center {
@@ -65,7 +104,12 @@ a {
 
 #projects {
   top: 80px;
-  background-color: #004080; /* Blue */
+  background-color: #004080;
+}
+
+#hobbies {
+  top: 140px;
+  background-color: #004d99;
 }
 
 .collapsible {
@@ -106,18 +150,18 @@ a {
 }
 
 html {
-    position: relative;
-    min-height: 100%;
+  position: relative;
+  min-height: 100%;
 }
 
 body {
-    margin: 0 0 100px;
-    padding: 25px;
+  margin: 0 0 100px;
+  padding: 25px;
 }
 
 .footer {
   position: absolute;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   bottom: 0;
   left: 0;

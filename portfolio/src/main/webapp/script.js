@@ -22,7 +22,8 @@ function addRandomFact() {
       'I\'m a huge fan of the Harry Potter series',
       'I love dogs, but I\'ve only ever owned a goldfish',
       'My useless talent is that I can whistle and hum at the same time',
-      'I\'m the oldest of four siblings'];
+      'I\'m the oldest of four siblings',
+      'I\'m a shoe fanatic. I own more pairs of shoes than dresses.'];
 
   // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
@@ -30,4 +31,20 @@ function addRandomFact() {
   // Add it to the page.
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
+}
+
+function makeCollapsible() {
+    var coll = document.getElementsByClassName("collapsible");
+      var i;
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+          } else {
+            content.style.display = "block";
+          }
+        });
+      }
 }
