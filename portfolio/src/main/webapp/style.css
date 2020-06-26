@@ -48,11 +48,11 @@ button:not(.collapsible) {
   box-shadow: 0 5px #99ccff;
 }
 
-button:hover {
+button:hover:not(.collapsible) {
   background-color: #003366
 }
 
-button:active {
+button:active:not(.collapsible) {
   background-color: #003366;
   box-shadow: 0 5px #0059b3;
   transform: translateY(5px);
@@ -69,7 +69,7 @@ button:active {
   text-align: center;
 }
 
-.me {
+.frame {
     border: 8px inset #d9b3ff;
 }
 
@@ -104,7 +104,12 @@ button:active {
 
 #projects {
   top: 80px;
-  background-color: #004080; /* Blue */
+  background-color: #004080;
+}
+
+#hobbies {
+  top: 140px;
+  background-color: #004d99;
 }
 
 .collapsible {
