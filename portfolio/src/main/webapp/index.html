@@ -2,21 +2,22 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>About Me</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
-    <div id="mySidenav" class="sidenav">
+    <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
       <a href="hobbies.html" id="hobbies">Hobbies</a>
     </div>
     <div id="content">
       <h1>About Me</h1>
-      <div id="image">
-      <a href="images/me.jpg"><img src="images/me.jpg" alt="Photo of me" height="320" class="frame"/></a>
-      <p class="fancy">Tzirliya<br>Plotkin</p></div>
+      <div id="center">
+        <a href="images/me.jpg"><img src="images/me.jpg" alt="Photo of me" height="320" class="frame"/></a>
+        <p class="fancy">Tzirliya<br>Plotkin</p>
+      </div>
       <h2>Background</h2>
       <p>I was born in 1999. I was raised in Brooklyn, NY. I was always interested in math from a 
         young age. When I was thirteen, I began to learn math online. It was there that I first 
@@ -25,7 +26,7 @@
         Quantum Physics. My first Computer Science course was in college. I loved the subject and 
         decided to become a CS major. Outside of coding, I enjoy walking, cooking, and practicing 
         piano and violin. </p>
-      <div id="image">
+      <div id="center">
         <button onclick="addRandomFact()">Click to get a random fact about me</button>
       </div>
       <div id="fact-container"></div>

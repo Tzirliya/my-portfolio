@@ -32,9 +32,9 @@ a {
   font-size: 108px;
   color: #4d0099;
   display: inline-block;
-  background-color: #
 }
 
+/* Regular buttons */
 button:not(.collapsible) {
   text-align: center;
   color: white;
@@ -64,8 +64,8 @@ button:active:not(.collapsible) {
   font-size: 16px;
 }
 
-/* use image and center to make images side-by-side and centered*/
-#image {
+/* Center multiple items */
+#center {
   text-align: center;
 }
 
@@ -73,14 +73,8 @@ button:active:not(.collapsible) {
     border: 8px inset #d9b3ff;
 }
 
-.center {
-  margin-left: auto;
-  margin-right: auto;
-  display: inline-block;
-}
-
 /* Style the links inside the sidenav */
-#mySidenav a {
+#sidenav a {
   position: fixed; /* Position them relative to the browser window */
   left: -100px; /* Position them outside of the screen */
   transition: 0.3s; /* Add transition on hover */
@@ -92,11 +86,11 @@ button:active:not(.collapsible) {
   border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
 }
 
-#mySidenav a:hover {
+#sidenav a:hover {
   left: 0; /* On mouse-over, make the elements appear as they should */
 }
 
-/* The about link: 20px from the top with a blue background */
+/* Three side tabs */
 #about-me {
   top: 20px;
   background-color: #003366;
@@ -112,6 +106,7 @@ button:active:not(.collapsible) {
   background-color: #004d99;
 }
 
+/* Collapsible Buttons */
 .collapsible {
   background-color: #004080;
   color: white;
@@ -141,6 +136,7 @@ button:active:not(.collapsible) {
   content: "\2212";
 }
 
+/* Content hidden by collapsible buttons */
 .content {
   padding: 0 18px;
   display: none;

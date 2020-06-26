@@ -12,39 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Adds a random fact to the page.
- */
-function addRandomFact() {
-  const facts =
-      ['I own over ten types of Rubik\'s Cubes',
-      'I memorized one thousand digits of Pi in high school',
-      'I\'m a huge fan of the Harry Potter series',
-      'I love dogs, but I\'ve only ever owned a goldfish',
-      'My useless talent is that I can whistle and hum at the same time',
-      'I\'m the oldest of four siblings',
-      'I\'m a shoe fanatic. I own more pairs of shoes than dresses.'];
 
-  // Pick a random fact.
+// Adds a random fact to the page
+function addRandomFact() {
+  const facts = [
+    'I own over ten types of Rubik\'s Cubes',
+    'I memorized one thousand digits of Pi in high school',
+    'I\'m a huge fan of the Harry Potter series',
+    'I love dogs, but I\'ve only ever owned a goldfish',
+    'My useless talent is that I can whistle and hum at the same time',
+    'I\'m the oldest of four siblings',
+    'I\'m a shoe fanatic. I own more pairs of shoes than dresses'];
+
+  // Pick a random fact
   const fact = facts[Math.floor(Math.random() * facts.length)];
 
-  // Add it to the page.
+  // Add it to the page
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
 }
 
+// Allows sections to collapse
 function makeCollapsible() {
-    var coll = document.getElementsByClassName("collapsible");
-      var i;
-      for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-          this.classList.toggle("active");
-          var content = this.nextElementSibling;
-          if (content.style.display === "block") {
-            content.style.display = "none";
-          } else {
-            content.style.display = "block";
-          }
-        });
+  var coll = document.getElementsByClassName("collapsible");
+  for (var i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
       }
+    });
+  }
 }
