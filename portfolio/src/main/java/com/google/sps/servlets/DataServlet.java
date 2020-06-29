@@ -14,19 +14,44 @@
 
 package com.google.sps.servlets;
 
+import java.util.ArrayList;
+import com.google.sps.data.Comment;
+import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private final ArrayList<Comment> comments= new ArrayList<Comment>();
+  
+  //Comment comment = new Comment("Hello Tzirliya!");
+
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("Hello Tzirliya!");
+    comments.clear();
+    for (int i = 0; i < 5; i++){
+      Comment comment = new Comment("Comment " + Integer.toString(i));
+      comments.add(comment);
+    }
+    String json = convertToJsonUsingGson(comments);
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+  
+  /**
+   * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
+   * the Gson library dependency to pom.xml.
+   */
+  private String convertToJsonUsingGson(ArrayList<Comment> comments) {
+    Gson gson = new Gson();
+    String json = gson.toJson(comments);
+    return json;
   }
 }
