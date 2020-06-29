@@ -49,15 +49,16 @@ function makeCollapsible() {
 }
 
 
-/**
- * Fetches a random quote from the server and adds it to the DOM.
- */
+// Fetches a random quote from the server and adds it to the DOM.
 function getRandomQuote() {
   fetch('/data')
     .then(response => response.json())
-    .then((comment) => {
-      document.getElementById('quote-container').innerText = comment.message;
-      console.log(comment.message);
+    .then((comments) => {
+      document.getElementById('quote-container').innerText = "";
+      for (let i = 0; i < comments.length; i++){
+        document.getElementById('quote-container').innerText = document.getElementById('quote-container').innerText + comments[i].message + "\n";
+        console.log(comments[i].message);
+      }
     });
 }
 
