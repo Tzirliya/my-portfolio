@@ -50,15 +50,20 @@ function makeCollapsible() {
 
 
 // Fetches a random quote from the server and adds it to the DOM.
-function getRandomQuote() {
+function getComments() {
   fetch('/data')
     .then(response => response.json())
     .then((comments) => {
-      document.getElementById('quote-container').innerText = "";
+      const comments_container = document.getElementById('comments-container');
       for (let i = 0; i < comments.length; i++){
-        document.getElementById('quote-container').innerText = document.getElementById('quote-container').innerText + comments[i].message + "\n";
+        comments_container.appendChild(createListElement(comments[i].message));
         console.log(comments[i].message);
       }
     });
 }
 
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

@@ -35,14 +35,24 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    comments.clear();
-    for (int i = 0; i < 5; i++){
-      Comment comment = new Comment("Comment " + Integer.toString(i));
-      comments.add(comment);
-    }
+    // comments.clear();
+    // for (int i = 0; i < 5; i++){
+    //   Comment comment = new Comment("Comment " + Integer.toString(i));
+    //   comments.add(comment);
+    // }
     String json = convertToJsonUsingGson(comments);
     response.setContentType("application/json;");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String message = request.getParameter("comment");
+    Comment comment = new Comment(message);
+    comments.add(comment);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/feedback.html");
   }
   
   /**
