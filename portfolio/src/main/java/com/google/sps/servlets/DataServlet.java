@@ -48,8 +48,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String message = request.getParameter("comment");
-    Comment comment = new Comment(message);
-    comments.add(comment);
+    if (!message.isEmpty()){
+      Comment comment = new Comment(message);
+      comments.add(comment);
+    }
 
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");

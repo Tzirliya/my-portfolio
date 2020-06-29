@@ -48,8 +48,7 @@ function makeCollapsible() {
   }
 }
 
-
-// Fetches a random quote from the server and adds it to the DOM.
+// Fetches adds comments to the DOM.
 function getComments() {
   fetch('/data')
     .then(response => response.json())

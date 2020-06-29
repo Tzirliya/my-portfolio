@@ -34,6 +34,29 @@ a {
   display: inline-block;
 }
 
+textarea {
+  width: 100%;
+  border: 3px solid #99ccff;
+  transition: 0.5s;
+  outline: None;
+}
+
+textarea:focus {
+  border: 3px solid #004080
+}
+
+ul {
+  list-style-type: none;
+  padding: 10px;
+}
+
+li {
+  background: #e6f2ff;
+  margin: 10px;
+  border: 2px solid #cce5ff;
+  padding: 5px;
+}
+
 /* Regular buttons */
 button:not(.collapsible) {
   text-align: center;
