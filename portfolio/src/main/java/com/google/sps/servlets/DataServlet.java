@@ -14,7 +14,14 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
+import java.util.List;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.util.Date;
@@ -29,21 +36,25 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private final ArrayList<Comment> comments= new ArrayList<Comment>();
-  
-  //Comment comment = new Comment("Hello Tzirliya!");
-
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // comments.clear();
-    // for (int i = 0; i < 5; i++){
-    //   Comment comment = new Comment("Comment " + Integer.toString(i));
-    //   comments.add(comment);
-    // }
-    String json = convertToJsonUsingGson(comments);
+    Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    List<Comment> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      String message = (String) entity.getProperty("message");
+      String username = (String) entity.getProperty("username");
+      Date postTime = (Date) entity.getProperty("postTime");
+      Comment comment = new Comment(message, username, postTime);
+      comments.add(comment);
+    }
+
+    // Convert comments arraylist to JSON
+    Gson gson = new Gson();
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(gson.toJson(comments));
   }
 
   @Override
@@ -52,21 +63,15 @@ public class DataServlet extends HttpServlet {
     String username = request.getParameter("username").trim();
     Date postTime = new Date();
     if (!message.isEmpty() && !username.isEmpty()){
-      Comment comment = new Comment(message, username, postTime);
-      comments.add(comment);
+      Entity commentEntity = new Entity("Comment");
+      commentEntity.setProperty("message", message);
+      commentEntity.setProperty("username", username);
+      commentEntity.setProperty("postTime", postTime);
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(commentEntity);
     }
-
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");
   }
   
-  /**
-   * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
-   * the Gson library dependency to pom.xml.
-   */
-  private String convertToJsonUsingGson(ArrayList<Comment> comments) {
-    Gson gson = new Gson();
-    String json = gson.toJson(comments);
-    return json;
-  }
 }
