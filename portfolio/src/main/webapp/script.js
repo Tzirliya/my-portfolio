@@ -48,17 +48,32 @@ function makeCollapsible() {
   }
 }
 
-
-// Fetches a random quote from the server and adds it to the DOM.
-function getRandomQuote() {
+// Fetches adds comments to the DOM.
+function getComments() {
   fetch('/data')
     .then(response => response.json())
     .then((comments) => {
-      document.getElementById('quote-container').innerText = "";
+      const comments_container = document.getElementById('comments-container');
       for (let i = 0; i < comments.length; i++){
-        document.getElementById('quote-container').innerText = document.getElementById('quote-container').innerText + comments[i].message + "\n";
-        console.log(comments[i].message);
+        comments_container.appendChild(createListElement(comments[i]));
+        console.log(comments[i]);
       }
     });
 }
 
+function createListElement(comment) {
+  const liElement = document.createElement('li');
+  const h3Element = document.createElement('h3');
+  const h5Element = document.createElement('h5');
+  const pElement = document.createElement('p')
+  h3Element.innerText = comment.username;
+  var dateTime = comment.postTime.split(" ");
+  let date = dateTime.slice(0, 3).join(" ");
+  let time = dateTime.slice(3, ).join(" ");
+  h5Element.innerText = "Posted on " + date + " at " + time;
+  pElement.innerText = comment.message;
+  liElement.appendChild(h3Element);
+  liElement.appendChild(h5Element);
+  liElement.appendChild(pElement);
+  return liElement;
+}

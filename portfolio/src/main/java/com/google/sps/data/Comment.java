@@ -14,17 +14,32 @@
 
 package com.google.sps.data;
 
+import java.util.Date;
+
 /** Class containing comments. */
 public final class Comment {
 
   private final String message;
+  private final String username;
+  private final Date postTime;
+
   
-  public Comment(String message) {
+  public Comment(String message, String username, Date postTime) {
     this.message = message;
+    this.username = username;
+    this.postTime = postTime;
   }
 
   public String getMessage() {
     return message;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public Date getPostTime() {
+    return postTime;
   }
 
 }

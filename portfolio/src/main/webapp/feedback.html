@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComments()">
     <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
@@ -15,8 +15,16 @@
     </div>
     <div id="content">
       <h1>Feedback and Comments</h1>
-      <button onclick="getRandomQuote()">Click for quote</button>
-      <h2><div id="quote-container"></div></h2>
+      <form action="/data" method="POST">
+        <h2>Comment:</h2>
+        <input type="text" name="username" required placeholder="Enter username to be displayed..." maxlength=40>
+        <br>
+        <br>
+        <textarea type="text" name="comment" required style="height:150px" placeholder="Write a comment..."></textarea>
+        <br>
+        <button type="submit">Submit</button>
+      </form>
+      <ul id="comments-container"></ul>
     </div>
     <div class="footer">
       <h4>Contact Me</h4>

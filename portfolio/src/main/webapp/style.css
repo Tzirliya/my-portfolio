@@ -23,6 +23,20 @@ h1 {
   font-size: 48px;
 }
 
+li h3 {
+  margin-bottom: 0px;
+  font-size: 20px;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 0px;
+  width: 300px;
+}
+
+li h5 {
+  margin-top: 0px;
+  font-style: italic;
+  font-weight: normal;
+}
+
 a {
   font-weight: bold; 
 }
@@ -32,6 +46,42 @@ a {
   font-size: 108px;
   color: #4d0099;
   display: inline-block;
+}
+
+input {
+  width: 40%;
+  border: 3px solid #99ccff;
+  transition: 0.5s;
+  outline: None;
+  padding: 5px;
+}
+
+input:focus {
+  border: 3px solid #004080
+}
+
+textarea {
+  width: 100%;
+  border: 3px solid #99ccff;
+  transition: 0.5s;
+  outline: None;
+  padding: 5px;
+}
+
+textarea:focus {
+  border: 3px solid #004080
+}
+
+ul {
+  list-style-type: none;
+  padding: 10px;
+}
+
+li {
+  background: #e6f2ff;
+  margin: 10px;
+  border: 2px solid #cce5ff;
+  padding: 5px;
 }
 
 /* Regular buttons */
