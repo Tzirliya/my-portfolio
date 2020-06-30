@@ -15,11 +15,13 @@
     </div>
     <div id="content">
       <h1>Feedback and Comments</h1>
-      <!-- <h1 id="total"></h1> -->
       <form action="/data" method="POST">
-        <h3>Comment:</h3>
-        <textarea type="text" name="comment" style="height:150px" placeholder="Write a comment..."></textarea>
-        <br/>
+        <h2>Comment:</h2>
+        <input type="text" name="username" required placeholder="Enter username to be displayed..." maxlength=40>
+        <br>
+        <br>
+        <textarea type="text" name="comment" required style="height:150px" placeholder="Write a comment..."></textarea>
+        <br>
         <button type="submit">Submit</button>
       </form>
       <ul id="comments-container"></ul>

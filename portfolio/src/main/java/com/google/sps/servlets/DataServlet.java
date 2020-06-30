@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import java.util.ArrayList;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
+import java.util.Date;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,9 +48,11 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String message = request.getParameter("comment");
-    if (!message.isEmpty()){
-      Comment comment = new Comment(message);
+    String message = request.getParameter("comment").trim();
+    String username = request.getParameter("username").trim();
+    Date postTime = new Date();
+    if (!message.isEmpty() && !username.isEmpty()){
+      Comment comment = new Comment(message, username, postTime);
       comments.add(comment);
     }
 
