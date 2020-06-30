@@ -53,7 +53,7 @@ function getComments() {
   fetch('/data')
     .then(response => response.json())
     .then((comments) => {
-      const comments_container = document.getElementById('comments-container');
+      let comments_container = document.getElementById('comments-container');
       for (let i = 0; i < comments.length; i++){
         comments_container.appendChild(createListElement(comments[i]));
         console.log(comments[i]);
@@ -61,17 +61,21 @@ function getComments() {
     });
 }
 
+// Returns an li element that contains the comment info to be displayed
 function createListElement(comment) {
-  const liElement = document.createElement('li');
-  const h3Element = document.createElement('h3');
-  const h5Element = document.createElement('h5');
-  const pElement = document.createElement('p')
+  // Create elements
+  let liElement = document.createElement('li');
+  let h3Element = document.createElement('h3');
+  let h5Element = document.createElement('h5');
+  let pElement = document.createElement('p')
+  // Fill elements
   h3Element.innerText = comment.username;
-  var dateTime = comment.postTime.split(" ");
+  let dateTime = comment.postTime.split(" ");
   let date = dateTime.slice(0, 3).join(" ");
   let time = dateTime.slice(3, ).join(" ");
   h5Element.innerText = "Posted on " + date + " at " + time;
   pElement.innerText = comment.message;
+  // Add elements to the li element
   liElement.appendChild(h3Element);
   liElement.appendChild(h5Element);
   liElement.appendChild(pElement);
