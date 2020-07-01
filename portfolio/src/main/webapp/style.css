@@ -117,15 +117,16 @@ button:active:not(.collapsible):not(.choice) {
 /* Choice buttons */
 .choice {
   background-color: #cce5ff;
-  padding: 15px;
+  padding: 10px 15px;
   border-radius: 50%;
   outline: none;
   border: none;
+  font-size: 20px;
 }
 
-/* .choice:active {
-  background-color: #99caff
-} */
+#choice .active {
+  background-color: #99ccff
+}
 
 /* Center multiple items */
 #center {
@@ -188,7 +189,7 @@ button:active:not(.collapsible):not(.choice) {
   font-size: 22px;
 }
 
-.active, .collapsible:hover {
+.active:not(.choice), .collapsible:hover {
   background-color: #003366;
 }
 

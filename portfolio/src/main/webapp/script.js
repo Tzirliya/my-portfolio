@@ -61,6 +61,16 @@ function getComments(quantity) {
         console.log(comments[i]);
       }
     });
+  var choices = document.getElementsByClassName("choice");
+  for (var i = 0; i < choices.length; i++) {
+    if (choices[i].classList.contains(quantity)){
+      choices[i].classList.add("active");
+      console.log("Add")
+    } else {
+      choices[i].classList.remove("active");
+      console.log("Remove")
+    }
+  }
 }
 
 // Returns an li element that contains the comment info to be displayed
