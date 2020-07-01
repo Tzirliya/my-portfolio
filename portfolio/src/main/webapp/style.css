@@ -85,7 +85,7 @@ li {
 }
 
 /* Regular buttons */
-button:not(.collapsible) {
+button:not(.collapsible):not(.choice) {
   text-align: center;
   color: white;
   font-size: 18px;
@@ -98,11 +98,11 @@ button:not(.collapsible) {
   box-shadow: 0 5px #99ccff;
 }
 
-button:hover:not(.collapsible) {
+button:hover:not(.collapsible):not(.choice) {
   background-color: #003366
 }
 
-button:active:not(.collapsible) {
+button:active:not(.collapsible):not(.choice) {
   background-color: #003366;
   box-shadow: 0 5px #0059b3;
   transform: translateY(5px);
@@ -113,6 +113,19 @@ button:active:not(.collapsible) {
   text-align: center;
   font-size: 16px;
 }
+
+/* Choice buttons */
+.choice {
+  background-color: #cce5ff;
+  padding: 15px;
+  border-radius: 50%;
+  outline: none;
+  border: none;
+}
+
+/* .choice:active {
+  background-color: #99caff
+} */
 
 /* Center multiple items */
 #center {
@@ -187,7 +200,7 @@ button:active:not(.collapsible) {
   margin-left: 5px;
 }
 
-.active:after {
+.active:after:not(.choice) {
   content: "\2212";
 }
 

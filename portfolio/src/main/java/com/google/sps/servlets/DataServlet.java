@@ -38,17 +38,27 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
+    // Debug
+    // response.getWriter().println(request);
+    // response.getWriter().println(request.getParameter("quantity"));
+
+    
     Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> comments = new ArrayList<>();
+    int count = 0;
+    int quantity = Integer.parseInt(request.getParameter("quantity"));
     for (Entity entity : results.asIterable()) {
+      if (count >= quantity) break;
       String message = (String) entity.getProperty("message");
       String username = (String) entity.getProperty("username");
       Date postTime = (Date) entity.getProperty("postTime");
       Comment comment = new Comment(message, username, postTime);
       comments.add(comment);
+      count++;
     }
 
     // Convert comments arraylist to JSON

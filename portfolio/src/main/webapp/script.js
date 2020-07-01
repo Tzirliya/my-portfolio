@@ -49,11 +49,13 @@ function makeCollapsible() {
 }
 
 // Fetches adds comments to the DOM.
-function getComments() {
-  fetch('/data')
+function getComments(quantity) {
+  console.log('/data?quantity=' + quantity)
+  fetch('/data?quantity=' + quantity)
     .then(response => response.json())
     .then((comments) => {
       let comments_container = document.getElementById('comments-container');
+      comments_container.innerHTML = "";
       for (let i = 0; i < comments.length; i++){
         comments_container.appendChild(createListElement(comments[i]));
         console.log(comments[i]);

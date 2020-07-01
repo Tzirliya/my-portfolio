@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments()">
+  <body onload="getComments(1)">
     <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
@@ -23,6 +23,21 @@
         <textarea type="text" name="comment" required style="height:150px" placeholder="Write a comment..."></textarea>
         <br>
         <button type="submit">Submit</button>
+      </form>
+      <br>
+      <form action="/data" method="GET">
+        <div id="choice">
+          <button type="button" class="choice" onclick="getComments(1)"> 1 </button>
+          <button type="button" class="choice" onclick="getComments(2)"> 2 </button>
+          <button type="button" class="choice" onclick="getComments(3)"> 3 </button>
+        </div>
+        <!-- <select name="quantity" id="quantity">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+        <input type="submit" value="Submit"> -->
       </form>
       <ul id="comments-container"></ul>
     </div>
