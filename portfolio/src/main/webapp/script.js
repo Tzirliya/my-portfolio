@@ -50,7 +50,7 @@ function makeCollapsible() {
 
 // Fetches adds comments to the DOM.
 function getComments(quantity) {
-  console.log('/data?quantity=' + quantity)
+  console.log('/data?quantity=' + quantity);
   fetch('/data?quantity=' + quantity)
     .then(response => response.json())
     .then((comments) => {
@@ -83,3 +83,10 @@ function createListElement(comment) {
   liElement.appendChild(pElement);
   return liElement;
 }
+
+// Fetches to delete all comments
+function deleteAllComments() {
+  console.log('/delete-data');
+  fetch('/delete-data')
+}
+
