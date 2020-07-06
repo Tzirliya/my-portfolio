@@ -20,18 +20,24 @@ import java.util.Date;
 public final class Comment {
 
   private final String message;
+  private final String email;
   private final String username;
   private final Date postTime;
 
   
-  public Comment(String message, String username, Date postTime) {
+  public Comment(String message, String email, String username, Date postTime) {
     this.message = message;
+    this.email = email;
     this.username = username;
     this.postTime = postTime;
   }
 
   public String getMessage() {
     return message;
+  }
+
+  public String getEmail() {
+    return email;
   }
 
   public String getUsername() {

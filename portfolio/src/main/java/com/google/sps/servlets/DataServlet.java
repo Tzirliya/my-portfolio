@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -51,9 +53,10 @@ public class DataServlet extends HttpServlet {
         break;
       }
       String message = (String) entity.getProperty("message");
+      String email = (String) entity.getProperty("email");
       String username = (String) entity.getProperty("username");
       Date postTime = (Date) entity.getProperty("postTime");
-      Comment comment = new Comment(message, username, postTime);
+      Comment comment = new Comment(message, email, username, postTime);
       comments.add(comment);
       count++;
     }
@@ -68,11 +71,14 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String message = request.getParameter("comment").trim();
+    UserService userService = UserServiceFactory.getUserService();
+    String email = userService.getCurrentUser().getEmail();
     String username = request.getParameter("username").trim();
     Date postTime = new Date();
     if (!message.isEmpty() && !username.isEmpty()){
       Entity commentEntity = new Entity("Comment");
       commentEntity.setProperty("message", message);
+      commentEntity.setProperty("email", email);
       commentEntity.setProperty("username", username);
       commentEntity.setProperty("postTime", postTime);
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
