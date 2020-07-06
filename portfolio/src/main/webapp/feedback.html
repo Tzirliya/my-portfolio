@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments()">
+  <body>
     <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
@@ -24,7 +24,18 @@
         <br>
         <button type="submit">Submit</button>
       </form>
+      <br>
+      <form action="/data" method="GET">
+        <div id="choice">
+          <button type="button" class="choice" onclick="getComments(1)"> 1 </button>
+          <button type="button" class="choice" onclick="getComments(2)"> 2 </button>
+          <button type="button" class="choice" onclick="getComments(3)"> 3 </button>
+        </div>
+      </form>
       <ul id="comments-container"></ul>
+      <form action="/delete-data" method="POST">
+        <button onclick="deleteAllComments()">Delete All Comments</button>
+      </form>
     </div>
     <div class="footer">
       <h4>Contact Me</h4>

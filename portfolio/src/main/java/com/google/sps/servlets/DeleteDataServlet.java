@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.sps.data.Comment;
@@ -33,52 +35,22 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+@WebServlet("/delete-data")
+public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    // Debug
-    // response.getWriter().println(request);
-    // response.getWriter().println(request.getParameter("quantity"));
-
-    
-    Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-
-    List<Comment> comments = new ArrayList<>();
-    int count = 0;
-    int quantity = Integer.parseInt(request.getParameter("quantity"));
-    for (Entity entity : results.asIterable()) {
-      if (count >= quantity) break;
-      String message = (String) entity.getProperty("message");
-      String username = (String) entity.getProperty("username");
-      Date postTime = (Date) entity.getProperty("postTime");
-      Comment comment = new Comment(message, username, postTime);
-      comments.add(comment);
-      count++;
-    }
-
-    // Convert comments arraylist to JSON
-    Gson gson = new Gson();
-    response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(comments));
+    response.getWriter().println("[]");
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String message = request.getParameter("comment").trim();
-    String username = request.getParameter("username").trim();
-    Date postTime = new Date();
-    if (!message.isEmpty() && !username.isEmpty()){
-      Entity commentEntity = new Entity("Comment");
-      commentEntity.setProperty("message", message);
-      commentEntity.setProperty("username", username);
-      commentEntity.setProperty("postTime", postTime);
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      datastore.put(commentEntity);
+    Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);    
+    for (Entity entity : results.asIterable()) {
+      Key key = entity.getKey();
+      datastore.delete(key);
     }
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");
