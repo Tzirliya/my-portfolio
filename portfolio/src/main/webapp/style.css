@@ -82,6 +82,7 @@ li {
   margin: 10px;
   border: 2px solid #cce5ff;
   padding: 5px;
+  content: '\002B';
 }
 
 /* Regular buttons */
@@ -201,7 +202,7 @@ button:active:not(.collapsible):not(.choice) {
   margin-left: 5px;
 }
 
-.active:after:not(.choice) {
+.collapsible.active:after {
   content: "\2212";
 }
 
@@ -224,6 +225,7 @@ body {
   padding: 25px;
 }
 
+/* Footer */
 .footer {
   position: absolute;
   padding: 10px;
