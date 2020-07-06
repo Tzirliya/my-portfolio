@@ -61,6 +61,14 @@ function getComments(quantity) {
         console.log(comments[i]);
       }
     });
+  var choices = document.getElementsByClassName("choice");
+  for (var i = 0; i < choices.length; i++) {
+    if (choices[i].classList.contains(quantity)){
+      choices[i].classList.add("active");
+    } else {
+      choices[i].classList.remove("active");
+    }
+  }
 }
 
 // Returns an li element that contains the comment info to be displayed
@@ -69,7 +77,7 @@ function createListElement(comment) {
   let liElement = document.createElement('li');
   let h3Element = document.createElement('h3');
   let h5Element = document.createElement('h5');
-  let pElement = document.createElement('p')
+  let pElement = document.createElement('p');
   // Fill elements
   h3Element.innerText = comment.username;
   let dateTime = comment.postTime.split(" ");
@@ -87,6 +95,7 @@ function createListElement(comment) {
 // Fetches to delete all comments
 function deleteAllComments() {
   console.log('/delete-data');
-  fetch('/delete-data')
+  fetch('/delete-data');
+  console.log("Deleted all comments");
 }
 
