@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -23,6 +25,7 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.sps.data.Comment;
+import com.google.sps.data.User;
 import com.google.gson.Gson;
 import java.util.Date;
 import java.io.IOException;
@@ -39,8 +42,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+    // Get comments
+    Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> comments = new ArrayList<>();
@@ -51,29 +56,49 @@ public class DataServlet extends HttpServlet {
         break;
       }
       String message = (String) entity.getProperty("message");
-      String username = (String) entity.getProperty("username");
+      String userId = (String) entity.getProperty("userId");
+      String title = (String) entity.getProperty("title");
       Date postTime = (Date) entity.getProperty("postTime");
-      Comment comment = new Comment(message, username, postTime);
+      Comment comment = new Comment(message, userId, title, postTime);
       comments.add(comment);
       count++;
     }
-    //datastore.close();
 
-    // Convert comments arraylist to JSON
+    // Get users
+    Query query2 = new Query("User");
+    PreparedQuery results2 = datastore.prepare(query2);
+    
+    List<User> users = new ArrayList<>();
+    for (Entity entity : results2.asIterable()) {
+      String id = (String) entity.getProperty("id");
+      String email = (String) entity.getProperty("email");
+      String nickname = (String) entity.getProperty("nickname");
+      User user = new User(id, email, nickname);
+      users.add(user);
+    }
+
+    // Convert lists to JSON
     Gson gson = new Gson();
     response.setContentType("application/json;");
-    response.getWriter().println(gson.toJson(comments));
+    List<List> data = new ArrayList<>();
+    data.add(comments);
+    data.add(users);
+    response.getWriter().println(gson.toJson(data));
+
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String message = request.getParameter("comment").trim();
-    String username = request.getParameter("username").trim();
+    UserService userService = UserServiceFactory.getUserService();
+    String userId = userService.getCurrentUser().getUserId();
+    String title = request.getParameter("title").trim();
     Date postTime = new Date();
-    if (!message.isEmpty() && !username.isEmpty()){
+    if (!message.isEmpty() && !title.isEmpty()){
       Entity commentEntity = new Entity("Comment");
       commentEntity.setProperty("message", message);
-      commentEntity.setProperty("username", username);
+      commentEntity.setProperty("userId", userId);
+      commentEntity.setProperty("title", title);
       commentEntity.setProperty("postTime", postTime);
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
       datastore.put(commentEntity);
