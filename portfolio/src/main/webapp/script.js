@@ -53,11 +53,22 @@ function getComments(quantity) {
   console.log('/data?quantity=' + quantity);
   fetch('/data?quantity=' + quantity)
     .then(response => response.json())
-    .then((comments) => {
+    .then((response) => {
+      let comments = response[0];
+      let users = response[1];
       let comments_container = document.getElementById('comments-container');
       comments_container.innerHTML = "";
       for (let i = 0; i < comments.length; i++){
-        comments_container.appendChild(createListElement(comments[i]));
+        let nickname = "Anonymous";
+        for (let j = 0; j < users.length; j++){
+          if (comments[i].userId === users[j].id){
+            if (users[j].nickname !== ""){
+              nickname = users[j].nickname;
+            }
+            break;
+          }
+        }
+        comments_container.appendChild(createListElement(comments[i], nickname));
         console.log(comments[i]);
       }
     });
@@ -72,18 +83,20 @@ function getComments(quantity) {
 }
 
 // Returns an li element that contains the comment info to be displayed
-function createListElement(comment) {
+function createListElement(comment, nickname) {
   // Create elements
   let liElement = document.createElement('li');
   let h3Element = document.createElement('h3');
   let h5Element = document.createElement('h5');
   let pElement = document.createElement('p');
   // Fill elements
-  h3Element.innerText = comment.username;
+  h3Element.innerText = comment.title;
   let dateTime = comment.postTime.split(" ");
   let date = dateTime.slice(0, 3).join(" ");
   let time = dateTime.slice(3, ).join(" ");
   h5Element.innerText = "Posted on " + date + " at " + time;
+//   let email = comment.email;
+  h5Element.innerText += "\nPosted by " + nickname;
   pElement.innerText = comment.message;
   // Add elements to the li element
   liElement.appendChild(h3Element);
@@ -118,6 +131,8 @@ function verifyLogin() {
               postCommentForm.innerHTML += '<a href=\'' + url + '\';">Login to comment</a>';
             } else {
               postComment.style.display = "block";
+              let nickname = loginStatus[2];
+              postCommentForm.innerHTML += '<p>"' + nickname + '" will be diplayed as your nickname. Click <a href=\'/nickname\';">here</a> to change your nickname.';
               postCommentForm.innerHTML += '<a href=\'' + url + '\';">Logout</a>';
             }  
           });
