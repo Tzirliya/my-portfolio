@@ -50,9 +50,25 @@ function makeCollapsible() {
 
 // Creates a map
 function createMap() {
+  var coordsNYC = {lat: 40.7128, lng: -74.0060};
   const map = new google.maps.Map(
     document.getElementById('map'),
-    {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+    {center: coordsNYC, zoom: 3});
+  var markerNYC =       new google.maps.Marker({position: coordsNYC, map: map});
+  var markerFlorida =   new google.maps.Marker({position: {lat: 28.5383, lng: -81.3792}, map: map});
+  var markerTexas =     new google.maps.Marker({position: {lat: 29.4241, lng: -98.4936}, map: map});
+  var markerLA =        new google.maps.Marker({position: {lat: 34.0522, lng: -118.2437}, map: map});
+  var markerSanFran =   new google.maps.Marker({position: {lat: 37.7749, lng: -122.4194}, map: map});
+  var markerPitt =      new google.maps.Marker({position: {lat: 40.4406, lng: -79.9959}, map: map});
+  var markerYellow =    new google.maps.Marker({position: {lat: 44.4280, lng: -110.5885}, map: map});
+  var markerAriz =      new google.maps.Marker({position: {lat: 36.0544, lng: -112.1401}, map: map});
+  var markerToronto =   new google.maps.Marker({position: {lat: 43.6532, lng: -79.3832}, map: map});
+  var markerSask =      new google.maps.Marker({position: {lat: 52.1332, lng: -106.6700}, map: map});
+  var markerBanff =     new google.maps.Marker({position: {lat: 51.1784, lng: -115.5708}, map: map});
+  var markerJeru =      new google.maps.Marker({position: {lat: 31.7683, lng: 35.2137}, map: map});
+  var markerSafed =     new google.maps.Marker({position: {lat: 32.9646, lng: 35.4960}, map: map});
+  var markerDnipro =    new google.maps.Marker({position: {lat: 48.4647, lng: 35.0462}, map: map});
+  var markerKiev =      new google.maps.Marker({position: {lat: 50.4501, lng: 30.5234}, map: map});
 }
 
 // Fetches adds comments to the DOM.
