@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getComments(1)">
+  <body onload="onload(1)">
     <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
@@ -15,14 +15,17 @@
     </div>
     <div id="content">
       <h1>Feedback and Comments</h1>
-      <form action="/data" method="POST">
+      <form id="post-comment-form" action="/data" method="POST">
         <h2>Comment:</h2>
-        <input type="text" name="username" required placeholder="Enter username to be displayed..." maxlength=40>
+        <div id="post-comment">
+          <input type="text" name="username" required placeholder="Enter username to be displayed..." maxlength=40>
+          <br>
+          <br>
+          <textarea type="text" name="comment" required style="height:150px" placeholder="Write a comment..."></textarea>
+          <br>
+          <button type="submit">Post Comment</button>
+        </div>
         <br>
-        <br>
-        <textarea type="text" name="comment" required style="height:150px" placeholder="Write a comment..."></textarea>
-        <br>
-        <button type="submit">Post Comment</button>
       </form>
       <br>
       <br>

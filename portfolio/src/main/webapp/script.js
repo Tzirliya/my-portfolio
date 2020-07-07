@@ -99,3 +99,31 @@ function deleteAllComments() {
   console.log("Deleted all comments");
 }
 
+function verifyLogin() {
+  console.log('/login-status');
+  fetch('/login-status')
+    .then(loginStatus => loginStatus.text())
+      .then(loginStatus => String(loginStatus))
+        .then(loginStatus => loginStatus.trim())
+          .then((loginStatus) => {
+            let postCommentForm = document.getElementById('post-comment-form');
+            let postComment = document.getElementById('post-comment');
+            console.log(loginStatus);
+            console.log(typeof(loginStatus));
+            loginStatus = loginStatus.split("\n");
+            let isLoggedIn = loginStatus[0];
+            let url = loginStatus[1];
+            if (isLoggedIn == "false") {
+              postComment.style.display = "none";
+              postCommentForm.innerHTML += '<a href=\'' + url + '\';">Login to comment</a>';
+            } else {
+              postComment.style.display = "block";
+              postCommentForm.innerHTML += '<a href=\'' + url + '\';">Logout</a>';
+            }  
+          });
+}
+
+function onload(quantity) {
+  verifyLogin();
+  getComments(quantity);
+}
