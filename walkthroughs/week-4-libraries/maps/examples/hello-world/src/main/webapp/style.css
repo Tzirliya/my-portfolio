@@ -3,3 +3,9 @@
   height: 500px;
   width: 500px;
 }
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
