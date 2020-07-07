@@ -124,7 +124,7 @@ function verifyLogin() {
         let postComment = document.getElementById('post-comment');
         console.log(loginStatus);
         console.log(typeof(loginStatus));
-        if (isLoggedIn) {
+        if (isLoggedIn === "true") {
           postComment.style.display = "block";
           if (!nickname){
             nickname = "Anonymous";
