@@ -84,7 +84,7 @@ public class DataServlet extends HttpServlet {
     data.add(comments);
     data.add(users);
     response.getWriter().println(gson.toJson(data));
-    // response.getWriter().println(gson.toJson(users));
+
   }
 
   @Override

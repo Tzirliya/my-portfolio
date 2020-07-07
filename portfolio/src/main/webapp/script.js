@@ -95,7 +95,6 @@ function createListElement(comment, nickname) {
   let date = dateTime.slice(0, 3).join(" ");
   let time = dateTime.slice(3, ).join(" ");
   h5Element.innerText = "Posted on " + date + " at " + time;
-//   let email = comment.email;
   h5Element.innerText += "\nPosted by " + nickname;
   pElement.innerText = comment.message;
   // Add elements to the li element
@@ -112,30 +111,31 @@ function deleteAllComments() {
   console.log("Deleted all comments");
 }
 
+// Ensures that user is logged-in in order to comment
 function verifyLogin() {
   console.log('/login-status');
   fetch('/login-status')
-    .then(loginStatus => loginStatus.text())
-      .then(loginStatus => String(loginStatus))
-        .then(loginStatus => loginStatus.trim())
-          .then((loginStatus) => {
-            let postCommentForm = document.getElementById('post-comment-form');
-            let postComment = document.getElementById('post-comment');
-            console.log(loginStatus);
-            console.log(typeof(loginStatus));
-            loginStatus = loginStatus.split("\n");
-            let isLoggedIn = loginStatus[0];
-            let url = loginStatus[1];
-            if (isLoggedIn == "false") {
-              postComment.style.display = "none";
-              postCommentForm.innerHTML += '<a href=\'' + url + '\';">Login to comment</a>';
-            } else {
-              postComment.style.display = "block";
-              let nickname = loginStatus[2];
-              postCommentForm.innerHTML += '<p>"' + nickname + '" will be diplayed as your nickname. Click <a href=\'/nickname\';">here</a> to change your nickname.';
-              postCommentForm.innerHTML += '<a href=\'' + url + '\';">Logout</a>';
-            }  
-          });
+    .then(loginStatus => loginStatus.json())
+      .then((loginStatus) => {
+        let isLoggedIn = loginStatus.isLoggedIn;
+        let url = loginStatus.url;
+        let nickname = loginStatus.nickname;
+        let postCommentForm = document.getElementById('post-comment-form');
+        let postComment = document.getElementById('post-comment');
+        console.log(loginStatus);
+        console.log(typeof(loginStatus));
+        if (isLoggedIn) {
+          postComment.style.display = "block";
+          if (!nickname){
+            nickname = "Anonymous";
+          }
+          postCommentForm.innerHTML += '<p>"' + nickname + '" will be diplayed as your nickname. Click <a href=\'/nickname\';">here</a> to change your nickname.';
+          postCommentForm.innerHTML += '<a href=\'' + url + '\';">Logout</a>';
+        } else {
+          postComment.style.display = "none";
+          postCommentForm.innerHTML += '<a href=\'' + url + '\';">Login to comment</a>';
+        }  
+      });
 }
 
 function onload(quantity) {

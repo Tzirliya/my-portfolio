@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.util.Date;
@@ -41,30 +42,30 @@ public class LoginStatusServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    response.setContentType("text/html");
+    HashMap<String, String> loginStatus = new HashMap<>();
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      response.getWriter().println("true");
+      loginStatus.put("isLoggedIn", "true");
       String userEmail = userService.getCurrentUser().getEmail();
       String urlToRedirectToAfterUserLogsOut = "/feedback.html";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-      response.getWriter().println(logoutUrl);
+      loginStatus.put("url", logoutUrl);
       String nickname = getUserNickname(userService.getCurrentUser().getUserId());
-      response.getWriter().println(nickname);
-    //   response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-    //   response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      loginStatus.put("nickname", nickname);
     } else {
-      response.getWriter().println("false");
+      loginStatus.put("isLoggedIn", "false");
       String urlToRedirectToAfterUserLogsIn = "/feedback.html";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-      response.getWriter().println(loginUrl);
-    //   response.getWriter().println("<p>Hello stranger.</p>");
-    //   response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+      loginStatus.put("url", loginUrl);
     }
 
-  }
+    // Convert hashmap to JSON
+    Gson gson = new Gson();
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(loginStatus));
 
+  }
 
   private String getUserNickname(String id) {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
