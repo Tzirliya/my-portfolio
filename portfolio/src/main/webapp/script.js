@@ -54,21 +54,32 @@ function createMap() {
   const map = new google.maps.Map(
     document.getElementById('map'),
     {center: coordsNYC, zoom: 3});
-  var markerNYC =       new google.maps.Marker({position: coordsNYC, map: map});
-  var markerFlorida =   new google.maps.Marker({position: {lat: 28.5383, lng: -81.3792}, map: map});
-  var markerTexas =     new google.maps.Marker({position: {lat: 29.4241, lng: -98.4936}, map: map});
-  var markerLA =        new google.maps.Marker({position: {lat: 34.0522, lng: -118.2437}, map: map});
-  var markerSanFran =   new google.maps.Marker({position: {lat: 37.7749, lng: -122.4194}, map: map});
-  var markerPitt =      new google.maps.Marker({position: {lat: 40.4406, lng: -79.9959}, map: map});
-  var markerYellow =    new google.maps.Marker({position: {lat: 44.4280, lng: -110.5885}, map: map});
-  var markerAriz =      new google.maps.Marker({position: {lat: 36.0544, lng: -112.1401}, map: map});
-  var markerToronto =   new google.maps.Marker({position: {lat: 43.6532, lng: -79.3832}, map: map});
-  var markerSask =      new google.maps.Marker({position: {lat: 52.1332, lng: -106.6700}, map: map});
-  var markerBanff =     new google.maps.Marker({position: {lat: 51.1784, lng: -115.5708}, map: map});
-  var markerJeru =      new google.maps.Marker({position: {lat: 31.7683, lng: 35.2137}, map: map});
-  var markerSafed =     new google.maps.Marker({position: {lat: 32.9646, lng: 35.4960}, map: map});
-  var markerDnipro =    new google.maps.Marker({position: {lat: 48.4647, lng: 35.0462}, map: map});
-  var markerKiev =      new google.maps.Marker({position: {lat: 50.4501, lng: 30.5234}, map: map});
+  var markerNYC =       new google.maps.Marker({position: coordsNYC, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerFlorida =   new google.maps.Marker({position: {lat: 28.5383, lng: -81.3792}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerTexas =     new google.maps.Marker({position: {lat: 29.4241, lng: -98.4936}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerLA =        new google.maps.Marker({position: {lat: 34.0522, lng: -118.2437}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerSanFran =   new google.maps.Marker({position: {lat: 37.7749, lng: -122.4194}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerPitt =      new google.maps.Marker({position: {lat: 40.4406, lng: -79.9959}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerYellow =    new google.maps.Marker({position: {lat: 44.4280, lng: -110.5885}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerAriz =      new google.maps.Marker({position: {lat: 36.0544, lng: -112.1401}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerDenver =    new google.maps.Marker({position: {lat: 39.7392, lng: -104.9903}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerToronto =   new google.maps.Marker({position: {lat: 43.6532, lng: -79.3832}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerSask =      new google.maps.Marker({position: {lat: 52.1332, lng: -106.6700}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerBanff =     new google.maps.Marker({position: {lat: 51.1784, lng: -115.5708}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerJeru =      new google.maps.Marker({position: {lat: 31.7683, lng: 35.2137}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerSafed =     new google.maps.Marker({position: {lat: 32.9646, lng: 35.4960}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerDnipro =    new google.maps.Marker({position: {lat: 48.4647, lng: 35.0462}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerKiev =      new google.maps.Marker({position: {lat: 50.4501, lng: 30.5234}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"});
+  var markerIceland =   new google.maps.Marker({position: {lat: 64.9631, lng: -19.0208}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerNewZ =      new google.maps.Marker({position: {lat: -40.9006, lng: 174.8860}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerSAfrica =   new google.maps.Marker({position: {lat: -30.5595, lng: 22.9375}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerAustralia = new google.maps.Marker({position: {lat: -25.2744, lng: 133.7751}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerGreece =    new google.maps.Marker({position: {lat: 39.0742, lng: 21.8243}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerItaly =     new google.maps.Marker({position: {lat: 41.8719, lng: 12.5674}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerParis =     new google.maps.Marker({position: {lat: 48.8566, lng: 2.3522}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});
+  var markerLondon =    new google.maps.Marker({position: {lat: 51.5074, lng: -0.1278}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});  
+  var markerHawaii =    new google.maps.Marker({position: {lat: 19.8968, lng: -155.5828}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});  
+  var markerTokyo =     new google.maps.Marker({position: {lat: 35.6762, lng: 139.6503}, map: map, icon: "http://maps.google.com/mapfiles/ms/icons/purple-dot.png"});  
 }
 
 // Fetches adds comments to the DOM.
