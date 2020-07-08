@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Hobbies</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBugz4DtpzusWF87Ebrq19ED5t0qh_PRG8"></script>
     <script src="script.js"></script>
   </head>
-  <body onload="makeCollapsible()">
+  <body onload="makeCollapsible(); createMap()">
     <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
@@ -61,6 +62,16 @@
           I enjoy walking in parks instead.
         </p>
         </p><a href="hike_collage.html">Here</a> is a collage of photos from my hikes.</p>
+      </div>
+      <button class="collapsible">Traveling</button>
+      <div class="content">
+        <br>
+        <p>It's fun to travel and find adventures hidden around the world. Although I haven't traveled 
+          to many places yet, they're definitely on my bucket list. Below is a map of my travels. The 
+          green pins are places I've been to, and the purple pins are places I'd like to visit in the future.
+        </p>
+        <div id="map" class="frame"></div>
+        <br>
       </div>
       <button class="collapsible">Rubik's Cubes</button>
       <div class="content">

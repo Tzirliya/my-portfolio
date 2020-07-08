@@ -13,6 +13,13 @@
   background-color: #f2e6ff;
 }
 
+#map {
+  height: 500px;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 * {
   font-family: Calibri;
   color: #003366;
