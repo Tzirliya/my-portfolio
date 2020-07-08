@@ -35,6 +35,10 @@
           <button type="button" class="choice 2" onclick="getComments(2)">2</button>
           <button type="button" class="choice 3" onclick="getComments(3)">3</button>
         </div>
+        <select id="dropdown" onchange="getComments(undefined, value)">
+          <option value="1">Date newest</option>
+          <option value="2">Date oldest</option>
+        </select>
       </form>
       <ul id="comments-container"></ul>
       <form action="/delete-data" method="POST">

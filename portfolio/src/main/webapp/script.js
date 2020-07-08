@@ -52,8 +52,8 @@ function makeCollapsible() {
 function createMap() {
   var coordsNYC = {lat: 40.7128, lng: -74.0060};
   const map = new google.maps.Map(document.getElementById('map'), {center: coordsNYC, zoom: 3});
-  var greenPin = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
-  var purplePin = "http://maps.google.com/mapfiles/ms/icons/purple-dot.png";
+  var greenPin = "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+  var purplePin = "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
   var markerNYC =       new google.maps.Marker({position: coordsNYC, map: map, icon: greenPin});
   var markerFlorida =   new google.maps.Marker({position: {lat: 28.5383, lng: -81.3792}, map: map, icon: greenPin});
   var markerTexas =     new google.maps.Marker({position: {lat: 29.4241, lng: -98.4936}, map: map, icon: greenPin});
@@ -82,10 +82,32 @@ function createMap() {
   var markerTokyo =     new google.maps.Marker({position: {lat: 35.6762, lng: 139.6503}, map: map, icon: purplePin});  
 }
 
+var values = new Map([
+  ["1", ["postTime", "descending"]], 
+  ["2", ["postTime", "ascending"]]
+]);
+// values.set("1", ("postTime", "descending"));
+// values.set("2", ("postTime", "ascending"));
+// {"1":("postTime", "descending"), "2":("postTime", "ascending")}
+var q = 1;
+var v = "1";
+var sb = "postTime";
+var sd = "descending";
 // Fetches adds comments to the DOM.
-function getComments(quantity) {
-  console.log('/data?quantity=' + quantity);
-  fetch('/data?quantity=' + quantity)
+function getComments(quantity=q, value=v) {
+//   console.log('/data?quantity=' + quantity);
+//   fetch('/data?quantity=' + quantity)
+//   console.log('/data?quantity=' + quantity + '&sortBy=postTime');
+//   fetch('/data?quantity=' + quantity + '&sortBy=postTime')
+  q = quantity;
+  v = value;
+  let sortBy = values.get(value)[0];
+  let sortDirection = values.get(value)[1];
+  console.log(q, v, values.get(value), sortBy, sortDirection);
+//   sb = sortBy;
+//   sd = sortDirection;
+  console.log('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection);
+  fetch('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection)
     .then(response => response.json())
     .then((response) => {
       let comments = response[0];
