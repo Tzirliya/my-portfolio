@@ -180,6 +180,11 @@ function verifyLogin() {
         console.log(loginStatus);
         console.log(typeof(loginStatus));
         if (isLoggedIn === "true") {
+          let isAdmin = loginStatus.isAdmin;
+          if (isAdmin === "true") {
+            let deleteAllCommentsButton = document.getElementById('delete-all-comments-button');
+            deleteAllCommentsButton.innerHTML = '<button onclick="deleteAllComments()">Delete All Comments</button>';
+          }
           postComment.style.display = "block";
           if (!nickname){
             nickname = "Anonymous";
