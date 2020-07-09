@@ -89,22 +89,22 @@ function createMap() {
 }
 
 // Global values that aren't all overwritten when getComment() is called
-var q = 1;
-var v = "1";
+var g_quantity = 1;
+var g_value = "POSTTIME_DESC";
+const values = new Map([
+  ["POSTTIME_DESC", {"SORT_BY": "postTime", "SORT_DIRECTION": "descending"}], 
+  ["POSTTIME_ASC", {"SORT_BY": "postTime", "SORT_DIRECTION": "ascending"}]
+]);
 
 // Fetches adds comments to the DOM.
-function getComments(quantity=q, value=v) {
-  var values = new Map([
-    ["1", ["postTime", "descending"]], 
-    ["2", ["postTime", "ascending"]]
-  ]);
+function getComments(quantity=g_quantity, value=g_value) {
   // Update global values
-  q = quantity;
-  v = value;
+  g_quantity = quantity;
+  g_value = value;
   // Create variables to create the URL
-  let sortBy = values.get(value)[0];
-  let sortDirection = values.get(value)[1];
-  console.log(q, v, values.get(value), sortBy, sortDirection);
+  let sortBy = values.get(value)["SORT_BY"];
+  let sortDirection = values.get(value)["SORT_DIRECTION"];
+  console.log(g_quantity, g_value, values.get(value), sortBy, sortDirection);
   console.log('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection);
   fetch('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection)
     .then(response => response.json())
