@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="onload(1)">
+  <body onload="initFeedback(1)">
     <div id="sidenav">
       <a href="index.html" id="about-me">About Me</a>
       <a href="projects.html" id="projects">Projects</a>
@@ -29,11 +29,17 @@
       </form>
       <br>
       <br>
-      <form action="/data" method="GET">
-        <div id="choice">
+      <form class="comment-attributes" action="/data" method="GET">
+        <div id="choice" class="inline">
           <button type="button" class="choice 1" onclick="getComments(1)">1</button>
           <button type="button" class="choice 2" onclick="getComments(2)">2</button>
           <button type="button" class="choice 3" onclick="getComments(3)">3</button>
+        </div>
+        <div id="custom-select" class="inline">
+          <select onchange="getComments(undefined, value)">
+            <option value="1">Date (most recent)</option>
+            <option value="2">Date (oldest)</option>
+          </select>
         </div>
       </form>
       <ul id="comments-container"></ul>

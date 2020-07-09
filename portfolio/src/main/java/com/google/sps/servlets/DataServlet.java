@@ -45,7 +45,14 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     // Get comments
-    Query query = new Query("Comment").addSort("postTime", SortDirection.DESCENDING);
+    String sortBy = (String) request.getParameter("sortBy");
+    String sortDirection = (String) request.getParameter("sortDirection");
+    Query query;
+    if (sortDirection.equals("descending")){
+      query = new Query("Comment").addSort(sortBy, SortDirection.DESCENDING);
+    } else {
+      query = new Query("Comment").addSort(sortBy, SortDirection.ASCENDING);
+    }
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> comments = new ArrayList<>();

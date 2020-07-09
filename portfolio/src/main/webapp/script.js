@@ -50,42 +50,63 @@ function makeCollapsible() {
 
 // Creates a map with markers
 function createMap() {
-  var coordsNYC = {lat: 40.7128, lng: -74.0060};
-  const map = new google.maps.Map(document.getElementById('map'), {center: coordsNYC, zoom: 3});
-  var greenPin = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
-  var purplePin = "http://maps.google.com/mapfiles/ms/icons/purple-dot.png";
-  var markerNYC =       new google.maps.Marker({position: coordsNYC, map: map, icon: greenPin});
-  var markerFlorida =   new google.maps.Marker({position: {lat: 28.5383, lng: -81.3792}, map: map, icon: greenPin});
-  var markerTexas =     new google.maps.Marker({position: {lat: 29.4241, lng: -98.4936}, map: map, icon: greenPin});
-  var markerLA =        new google.maps.Marker({position: {lat: 34.0522, lng: -118.2437}, map: map, icon: greenPin});
-  var markerSanFran =   new google.maps.Marker({position: {lat: 37.7749, lng: -122.4194}, map: map, icon: greenPin});
-  var markerPitt =      new google.maps.Marker({position: {lat: 40.4406, lng: -79.9959}, map: map, icon: greenPin});
-  var markerYellow =    new google.maps.Marker({position: {lat: 44.4280, lng: -110.5885}, map: map, icon: greenPin});
-  var markerAriz =      new google.maps.Marker({position: {lat: 36.0544, lng: -112.1401}, map: map, icon: greenPin});
-  var markerDenver =    new google.maps.Marker({position: {lat: 39.7392, lng: -104.9903}, map: map, icon: greenPin});
-  var markerToronto =   new google.maps.Marker({position: {lat: 43.6532, lng: -79.3832}, map: map, icon: greenPin});
-  var markerSask =      new google.maps.Marker({position: {lat: 52.1332, lng: -106.6700}, map: map, icon: greenPin});
-  var markerBanff =     new google.maps.Marker({position: {lat: 51.1784, lng: -115.5708}, map: map, icon: greenPin});
-  var markerJeru =      new google.maps.Marker({position: {lat: 31.7683, lng: 35.2137}, map: map, icon: greenPin});
-  var markerSafed =     new google.maps.Marker({position: {lat: 32.9646, lng: 35.4960}, map: map, icon: greenPin});
-  var markerDnipro =    new google.maps.Marker({position: {lat: 48.4647, lng: 35.0462}, map: map, icon: greenPin});
-  var markerKiev =      new google.maps.Marker({position: {lat: 50.4501, lng: 30.5234}, map: map, icon: greenPin});
-  var markerIceland =   new google.maps.Marker({position: {lat: 64.9631, lng: -19.0208}, map: map, icon: purplePin});
-  var markerNewZ =      new google.maps.Marker({position: {lat: -40.9006, lng: 174.8860}, map: map, icon: purplePin});
-  var markerSAfrica =   new google.maps.Marker({position: {lat: -30.5595, lng: 22.9375}, map: map, icon: purplePin});
-  var markerAustralia = new google.maps.Marker({position: {lat: -25.2744, lng: 133.7751}, map: map, icon: purplePin});
-  var markerGreece =    new google.maps.Marker({position: {lat: 39.0742, lng: 21.8243}, map: map, icon: purplePin});
-  var markerItaly =     new google.maps.Marker({position: {lat: 41.8719, lng: 12.5674}, map: map, icon: purplePin});
-  var markerParis =     new google.maps.Marker({position: {lat: 48.8566, lng: 2.3522}, map: map, icon: purplePin});
-  var markerLondon =    new google.maps.Marker({position: {lat: 51.5074, lng: -0.1278}, map: map, icon: purplePin});  
-  var markerHawaii =    new google.maps.Marker({position: {lat: 19.8968, lng: -155.5828}, map: map, icon: purplePin});  
-  var markerTokyo =     new google.maps.Marker({position: {lat: 35.6762, lng: 139.6503}, map: map, icon: purplePin});  
+  const map = new google.maps.Map(document.getElementById('map'), {center: {lat: 40.7128, lng: -74.0060}, zoom: 3});
+  var greenPin = "https://maps.google.com/mapfiles/ms/icons/green-dot.png";
+  var purplePin = "https://maps.google.com/mapfiles/ms/icons/purple-dot.png";
+  var markers = [];
+  var markerCoords = [
+    {position: {lat: 40.7128, lng: -74.0060}, map: map, icon: greenPin},
+    {position: {lat: 28.5383, lng: -81.3792}, map: map, icon: greenPin},
+    {position: {lat: 29.4241, lng: -98.4936}, map: map, icon: greenPin},
+    {position: {lat: 34.0522, lng: -118.2437}, map: map, icon: greenPin},
+    {position: {lat: 37.7749, lng: -122.4194}, map: map, icon: greenPin},
+    {position: {lat: 40.4406, lng: -79.9959}, map: map, icon: greenPin},
+    {position: {lat: 44.4280, lng: -110.5885}, map: map, icon: greenPin},
+    {position: {lat: 36.0544, lng: -112.1401}, map: map, icon: greenPin},
+    {position: {lat: 39.7392, lng: -104.9903}, map: map, icon: greenPin},
+    {position: {lat: 43.6532, lng: -79.3832}, map: map, icon: greenPin},
+    {position: {lat: 52.1332, lng: -106.6700}, map: map, icon: greenPin},
+    {position: {lat: 51.1784, lng: -115.5708}, map: map, icon: greenPin},
+    {position: {lat: 31.7683, lng: 35.2137}, map: map, icon: greenPin},
+    {position: {lat: 32.9646, lng: 35.4960}, map: map, icon: greenPin},
+    {position: {lat: 48.4647, lng: 35.0462}, map: map, icon: greenPin},
+    {position: {lat: 50.4501, lng: 30.5234}, map: map, icon: greenPin},
+    {position: {lat: 64.9631, lng: -19.0208}, map: map, icon: purplePin},
+    {position: {lat: -40.9006, lng: 174.8860}, map: map, icon: purplePin},
+    {position: {lat: -30.5595, lng: 22.9375}, map: map, icon: purplePin},
+    {position: {lat: -25.2744, lng: 133.7751}, map: map, icon: purplePin},
+    {position: {lat: 39.0742, lng: 21.8243}, map: map, icon: purplePin},
+    {position: {lat: 41.8719, lng: 12.5674}, map: map, icon: purplePin},
+    {position: {lat: 48.8566, lng: 2.3522}, map: map, icon: purplePin},
+    {position: {lat: 51.5074, lng: -0.1278}, map: map, icon: purplePin},  
+    {position: {lat: 19.8968, lng: -155.5828}, map: map, icon: purplePin},  
+    {position: {lat: 35.6762, lng: 139.6503}, map: map, icon: purplePin}
+  ];
+  for (mc of markerCoords) {
+    marker = new google.maps.Marker(mc);
+    markers.push(marker);
+  }
 }
 
+// Global values that aren't all overwritten when getComment() is called
+var q = 1;
+var v = "1";
+
 // Fetches adds comments to the DOM.
-function getComments(quantity) {
-  console.log('/data?quantity=' + quantity);
-  fetch('/data?quantity=' + quantity)
+function getComments(quantity=q, value=v) {
+  var values = new Map([
+    ["1", ["postTime", "descending"]], 
+    ["2", ["postTime", "ascending"]]
+  ]);
+  // Update global values
+  q = quantity;
+  v = value;
+  // Create variables to create the URL
+  let sortBy = values.get(value)[0];
+  let sortDirection = values.get(value)[1];
+  console.log(q, v, values.get(value), sortBy, sortDirection);
+  console.log('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection);
+  fetch('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection)
     .then(response => response.json())
     .then((response) => {
       let comments = response[0];
@@ -172,7 +193,12 @@ function verifyLogin() {
       });
 }
 
-function onload(quantity) {
+function initFeedback(quantity) {
   verifyLogin();
   getComments(quantity);
+}
+
+function initHobbies() {
+  makeCollapsible(); 
+  createMap();
 }
