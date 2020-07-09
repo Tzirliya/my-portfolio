@@ -45,26 +45,21 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     // Get comments
-    String sortBy1 = (String) request.getParameter("sortBy");
-    String sortDirection1 = (String) request.getParameter("sortDirection");
+    String sortBy = (String) request.getParameter("sortBy");
+    String sortDirection = (String) request.getParameter("sortDirection");
     Query query;
-    // if (sortDirection1.equals("descending")){
-    //   query = new Query("Comment").addSort(sortBy1, SortDirection.DESCENDING);
-    // } else {
-    //   query = new Query("Comment").addSort(sortBy1, SortDirection.ASCENDING);
-    // }
-    //query = new Query("Comment");
-    query = new Query("Comment").addSort(sortBy1, SortDirection.ASCENDING);
-    if (sortDirection1.equals("descending")){
-      query = new Query("Comment").addSort(sortBy1, SortDirection.DESCENDING);
+    if (sortDirection.equals("descending")){
+      query = new Query("Comment").addSort(sortBy, SortDirection.DESCENDING);
+    } else {
+      query = new Query("Comment").addSort(sortBy, SortDirection.ASCENDING);
     }
     PreparedQuery results = datastore.prepare(query);
 
     List<Comment> comments = new ArrayList<>();
     int count = 0;
-    int quantity1 = Integer.parseInt(request.getParameter("quantity"));
+    int quantity = Integer.parseInt(request.getParameter("quantity"));
     for (Entity entity : results.asIterable()) {
-      if (count >= quantity1) {
+      if (count >= quantity) {
         break;
       }
       String message = (String) entity.getProperty("message");
