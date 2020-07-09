@@ -47,7 +47,8 @@ public class LoginStatusServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       loginStatus.put("isLoggedIn", "true");
-      String userEmail = userService.getCurrentUser().getEmail();
+      String isAdmin = String.valueOf(userService.isUserAdmin());
+      loginStatus.put("isAdmin", isAdmin);
       String urlToRedirectToAfterUserLogsOut = "/feedback.html";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
       loginStatus.put("url", logoutUrl);
