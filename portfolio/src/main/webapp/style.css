@@ -93,14 +93,14 @@ li {
   overflow: auto;
 }
 
-i {
+span {
   background: #cce6ff;
   padding: 3px;
   border-radius: 10%;
   float: right;
 }
 
-i:hover {
+span:hover {
   background: #99ccff;
 }
 

@@ -144,7 +144,7 @@ function createListElement(comment, nickname) {
   let h3Element = document.createElement('h3');
   let h5Element = document.createElement('h5');
   let pElement = document.createElement('p');
-  let iElement = document.createElement('i');
+  let spanElement = document.createElement('span');
   // Fill elements
   h3Element.innerText = comment.title;
   let dateTime = comment.postTime.split(" ");
@@ -157,15 +157,15 @@ function createListElement(comment, nickname) {
     h5Element.innerText += "\nPosted by " + nickname;
   }
   pElement.innerText = comment.message;
-  iElement.setAttribute("onclick", "deleteComment('" + comment.postTime + "')");
-  iElement.setAttribute("class", "fa fa-trash-o fa-2x");
-  iElement.setAttribute("aria-hidden", "true");
+  spanElement.setAttribute("onclick", "deleteComment('" + comment.postTime + "')");
+  spanElement.setAttribute("class", "fa fa-trash-o fa-2x");
+  spanElement.setAttribute("aria-hidden", "true");
   // Add elements to the li element
   liElement.appendChild(h3Element);
   liElement.appendChild(h5Element);
   liElement.appendChild(pElement);
   if (g_currentUserId === comment.userId || g_isAdmin === "true"){
-    liElement.appendChild(iElement);
+    liElement.appendChild(spanElement);
   }
   return liElement;
 }
