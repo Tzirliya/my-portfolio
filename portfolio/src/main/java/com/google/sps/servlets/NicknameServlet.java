@@ -35,20 +35,26 @@ public class NicknameServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
+    out.println("<head><title>Set Nickname</title><link rel='stylesheet' href='style.css'></head>");
+    out.println("<div id='content'>");
     out.println("<h1>Set Nickname</h1>");
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       String nickname = getUserNickname(userService.getCurrentUser().getUserId());
+      out.println("<div id='center'>");
       out.println("<p>Set your nickname here:</p>");
       out.println("<form method=\"POST\" action=\"/nickname\">");
       out.println("<input name=\"nickname\" value=\"" + nickname + "\" />");
-      out.println("<br/>");
+      out.println("<br><br>");
       out.println("<button>Submit</button>");
       out.println("</form>");
+      out.println("</div>");
     } else {
       String loginUrl = userService.createLoginURL("/nickname");
       out.println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+    
+    out.println("</div>");
     }
   }
 
