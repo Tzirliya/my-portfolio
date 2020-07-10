@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 import com.google.sps.data.Comment;
 import com.google.sps.data.User;
 import com.google.gson.Gson;
@@ -87,9 +88,9 @@ public class DataServlet extends HttpServlet {
     // Convert lists to JSON
     Gson gson = new Gson();
     response.setContentType("application/json;");
-    List<List> data = new ArrayList<>();
-    data.add(comments);
-    data.add(users);
+    HashMap<String, List> data = new HashMap<>();
+    data.put("comments", comments);
+    data.put("users", users);
     response.getWriter().println(gson.toJson(data));
 
   }

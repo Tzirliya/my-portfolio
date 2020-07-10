@@ -109,8 +109,8 @@ function getComments(quantity=g_quantity, value=g_value) {
   fetch('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection)
     .then(response => response.json())
     .then((response) => {
-      let comments = response[0];
-      let users = response[1];
+      let comments = response.comments;
+      let users = response.users;
       let comments_container = document.getElementById('comments-container');
       comments_container.innerHTML = "";
       for (let i = 0; i < comments.length; i++){
