@@ -144,6 +144,7 @@ function createListElement(comment, nickname) {
   let h3Element = document.createElement('h3');
   let h5Element = document.createElement('h5');
   let pElement = document.createElement('p');
+  let iElement = document.createElement('i');
   // Fill elements
   h3Element.innerText = comment.title;
   let dateTime = comment.postTime.split(" ");
@@ -152,12 +153,22 @@ function createListElement(comment, nickname) {
   h5Element.innerText = "Posted on " + date + " at " + time;
   h5Element.innerText += "\nPosted by " + nickname;
   pElement.innerText = comment.message;
+  iElement.setAttribute("onclick", "deleteComment('" + comment.postTime + "')");
+  iElement.setAttribute("class", "fa fa-trash-o fa-2x");
+  iElement.setAttribute("aria-hidden", "true");
   // Add elements to the li element
   liElement.appendChild(h3Element);
   liElement.appendChild(h5Element);
   liElement.appendChild(pElement);
+  liElement.appendChild(iElement);
   return liElement;
 }
+
+function deleteComment(postTime) {
+  console.log("Clicked delete");
+  console.log('/delete-data?postTime=' + postTime);
+  fetch('/delete-data?postTime=' + postTime);
+};
 
 // Fetches to delete all comments
 function deleteAllComments() {

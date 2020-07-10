@@ -90,6 +90,18 @@ li {
   border: 2px solid #cce6ff;
   padding: 5px;
   content: '\002B';
+  overflow: auto;
+}
+
+i {
+  background: #cce6ff;
+  padding: 3px;
+  border-radius: 10%;
+  float: right;
+}
+
+i:hover {
+  background: #99ccff;
 }
 
 /* Dropdown menu */
