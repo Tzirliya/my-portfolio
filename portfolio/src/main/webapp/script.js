@@ -157,7 +157,7 @@ function createListElement(comment, nickname) {
     h5Element.innerText += "\nPosted by " + nickname;
   }
   pElement.innerText = comment.message;
-  spanElement.setAttribute("onclick", "deleteComment('" + comment.postTime + "')");
+  spanElement.setAttribute("onclick", "deleteComment('" + comment.id + "')");
   spanElement.setAttribute("class", "fa fa-trash-o fa-2x");
   spanElement.setAttribute("aria-hidden", "true");
   // Add elements to the li element
@@ -170,11 +170,11 @@ function createListElement(comment, nickname) {
   return liElement;
 }
 
-function deleteComment(postTime) {
-  let params = new URLSearchParams('postTime=' + postTime);
+function deleteComment(commentId) {
+  let parameters = new URLSearchParams('id=' + commentId);
   console.log("Clicked delete");
-  console.log('/delete-some-data', params);
-  fetch('/delete-some-data', {method: "post", body: params});
+  console.log('/delete-some-data', parameters);
+  fetch('/delete-some-data', {method: "post", body: parameters});
 };
 
 // Fetches to delete all comments

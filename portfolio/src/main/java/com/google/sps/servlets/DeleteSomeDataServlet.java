@@ -45,34 +45,20 @@ public class DeleteSomeDataServlet extends HttpServlet {
     Query query = new Query("Comment");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    String stringPostTime = (String) request.getParameter("postTime");
-    DateFormat format = new SimpleDateFormat("MMM d, yyyy h:mm:ss a");
-    Date postTime;
-    try {
-      postTime = format.parse(stringPostTime);
-      System.out.println("Converted date");
-    } catch (Exception e) {
-      System.out.println(e);
-      postTime = new Date();
-    }
     UserService userService = UserServiceFactory.getUserService();
     String userId = userService.getCurrentUser().getUserId();
     String isAdmin = String.valueOf(userService.isUserAdmin());
+    long id = Long.parseLong(request.getParameter("id"));
     for (Entity entity : results.asIterable()) {
-      Date e_postTime = (Date) entity.getProperty("postTime");
       String e_userId = (String) entity.getProperty("userId");
-      // Remove miliseconds from e_postTime
-      long time = e_postTime.getTime();
-      e_postTime.setTime((time / 1000) * 1000);
-      // Assume it's the right comment if it was posted at the same second
-      if (e_postTime.equals(postTime) && (e_userId.equals(userId) || isAdmin.equals("true"))){
+      long e_id = (long) entity.getKey().getId();
+      if (e_id == id && (e_userId.equals(userId) || isAdmin.equals("true"))){
         Key key = entity.getKey();
         datastore.delete(key);
-        System.out.println("deleted a comment");
+        System.out.println("Deleted a comment");
         break;
       }
     }
-    
   }
 
 }
