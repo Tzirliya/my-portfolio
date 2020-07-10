@@ -151,7 +151,11 @@ function createListElement(comment, nickname) {
   let date = dateTime.slice(0, 3).join(" ");
   let time = dateTime.slice(3, ).join(" ");
   h5Element.innerText = "Posted on " + date + " at " + time;
-  h5Element.innerText += "\nPosted by " + nickname;
+  if (g_currentUserId === comment.userId){
+    h5Element.innerText += "\nPosted by You as " + nickname;
+  } else {
+    h5Element.innerText += "\nPosted by " + nickname;
+  }
   pElement.innerText = comment.message;
   iElement.setAttribute("onclick", "deleteComment('" + comment.postTime + "')");
   iElement.setAttribute("class", "fa fa-trash-o fa-2x");
@@ -160,7 +164,9 @@ function createListElement(comment, nickname) {
   liElement.appendChild(h3Element);
   liElement.appendChild(h5Element);
   liElement.appendChild(pElement);
-  liElement.appendChild(iElement);
+  if (g_currentUserId === comment.userId || g_isAdmin === "true"){
+    liElement.appendChild(iElement);
+  }
   return liElement;
 }
 
@@ -177,6 +183,10 @@ function deleteAllComments() {
   console.log("Deleted all comments");
 }
 
+// Global values used in multiple functions
+var g_currentUserId = "";
+var g_isAdmin = "false";
+
 // Ensures that user is logged-in in order to comment
 function verifyLogin() {
   console.log('/login-status');
@@ -191,8 +201,9 @@ function verifyLogin() {
         console.log(loginStatus);
         console.log(typeof(loginStatus));
         if (isLoggedIn === "true") {
-          let isAdmin = loginStatus.isAdmin;
-          if (isAdmin === "true") {
+          g_currentUserId = loginStatus.userId;
+          g_isAdmin = loginStatus.isAdmin;
+          if (g_isAdmin === "true") {
             let deleteAllCommentsButton = document.getElementById('delete-all-comments-button');
             deleteAllCommentsButton.innerHTML = '<button onclick="deleteAllComments()">Delete All Comments</button>';
           }
