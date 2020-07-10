@@ -75,12 +75,16 @@ public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").setKeysOnly();
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);    
-    for (Entity entity : results.asIterable()) {
-      Key key = entity.getKey();
-      datastore.delete(key);
+    UserService userService = UserServiceFactory.getUserService();
+    String isAdmin = String.valueOf(userService.isUserAdmin());
+    if (isAdmin.equals("true")){
+      Query query = new Query("Comment").setKeysOnly();
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      PreparedQuery results = datastore.prepare(query);    
+      for (Entity entity : results.asIterable()) {
+        Key key = entity.getKey();
+        datastore.delete(key);
+      }
     }
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");
