@@ -171,15 +171,16 @@ function createListElement(comment, nickname) {
 }
 
 function deleteComment(postTime) {
+  let params = new URLSearchParams('postTime=' + postTime);
   console.log("Clicked delete");
-  console.log('/delete-data?postTime=' + postTime);
-  fetch('/delete-data?postTime=' + postTime);
+  console.log('/delete-some-data', params);
+  fetch('/delete-some-data', {method: "post", body: params});
 };
 
 // Fetches to delete all comments
 function deleteAllComments() {
-  console.log('/delete-data');
-  fetch('/delete-data');
+  console.log('/delete-all-data');
+  fetch('/delete-all-data');
   console.log("Deleted all comments");
 }
 
