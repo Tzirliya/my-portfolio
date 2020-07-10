@@ -21,6 +21,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.util.ArrayList;
@@ -80,11 +81,12 @@ public class DeleteDataServlet extends HttpServlet {
     if (isAdmin.equals("true")){
       Query query = new Query("Comment").setKeysOnly();
       DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      PreparedQuery results = datastore.prepare(query);    
+      PreparedQuery results = datastore.prepare(query);  
+      List<Key> keys = new ArrayList<>();  
       for (Entity entity : results.asIterable()) {
-        Key key = entity.getKey();
-        datastore.delete(key);
+        keys.add(entity.getKey());
       }
+      datastore.delete(keys);
     }
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");
