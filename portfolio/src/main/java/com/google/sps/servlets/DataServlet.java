@@ -63,11 +63,12 @@ public class DataServlet extends HttpServlet {
       if (count >= quantity) {
         break;
       }
+      long id = (long) entity.getKey().getId();
       String message = (String) entity.getProperty("message");
       String userId = (String) entity.getProperty("userId");
       String title = (String) entity.getProperty("title");
       Date postTime = (Date) entity.getProperty("postTime");
-      Comment comment = new Comment(message, userId, title, postTime);
+      Comment comment = new Comment(id, message, userId, title, postTime);
       comments.add(comment);
       count++;
     }

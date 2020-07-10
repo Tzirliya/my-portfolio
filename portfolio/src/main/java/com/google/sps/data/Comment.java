@@ -19,17 +19,23 @@ import java.util.Date;
 /** Class containing comments. */
 public final class Comment {
 
+  private final long id;
   private final String message;
   private final String userId;
   private final String title;
   private final Date postTime;
 
   
-  public Comment(String message, String userId, String title, Date postTime) {
+  public Comment(long id, String message, String userId, String title, Date postTime) {
+    this.id = id;
     this.message = message;
     this.userId = userId;
     this.title = title;
     this.postTime = postTime;
+  }
+
+  public long getId() {
+    return id;
   }
 
   public String getMessage() {
