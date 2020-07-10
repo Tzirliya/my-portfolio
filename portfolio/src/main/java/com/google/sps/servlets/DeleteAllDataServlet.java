@@ -53,6 +53,7 @@ public class DeleteAllDataServlet extends HttpServlet {
         keys.add(entity.getKey());
       }
       datastore.delete(keys);
+      System.out.println("Deleted all comments");
     }
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");

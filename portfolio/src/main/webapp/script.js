@@ -170,14 +170,15 @@ function createListElement(comment, nickname) {
   return liElement;
 }
 
+// Deletes a single comment
 function deleteComment(commentId) {
   let parameters = new URLSearchParams('id=' + commentId);
-  console.log("Clicked delete");
   console.log('/delete-some-data', parameters);
   fetch('/delete-some-data', {method: "post", body: parameters});
+  getComments();
 };
 
-// Fetches to delete all comments
+// Deletes all comments
 function deleteAllComments() {
   console.log('/delete-all-data');
   fetch('/delete-all-data');
