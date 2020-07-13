@@ -37,23 +37,44 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.*;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/delete-all-data")
-public class DeleteAllDataServlet extends HttpServlet {
+@WebServlet("/delete-data")
+public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    UserService userService = UserServiceFactory.getUserService();
-    String isAdmin = String.valueOf(userService.isUserAdmin());
-    if (isAdmin.equals("true")){
-      Query query = new Query("Comment").setKeysOnly();
-      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-      PreparedQuery results = datastore.prepare(query);  
-      List<Key> keys = new ArrayList<>();  
-      for (Entity entity : results.asIterable()) {
+    String deleteAll = (String) request.getParameter("deleteAll");
+    if (deleteAll.equals("true")) {
+      UserService userService = UserServiceFactory.getUserService();
+      String isAdmin = String.valueOf(userService.isUserAdmin());
+      if (isAdmin.equals("true")){
+        Query query = new Query("Comment").setKeysOnly();
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);  
+        List<Key> keys = new ArrayList<>();  
+        for (Entity entity : results.asIterable()) {
         keys.add(entity.getKey());
+        }
+        datastore.delete(keys);
+        System.out.println("Deleted all comments");
       }
-      datastore.delete(keys);
-      System.out.println("Deleted all comments");
+    } else {
+      Query query = new Query("Comment");
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      PreparedQuery results = datastore.prepare(query);
+      UserService userService = UserServiceFactory.getUserService();
+      String userId = userService.getCurrentUser().getUserId();
+      String isAdmin = String.valueOf(userService.isUserAdmin());
+      long id = Long.parseLong(request.getParameter("id"));
+      for (Entity entity : results.asIterable()) {
+        String e_userId = (String) entity.getProperty("userId");
+        long e_id = (long) entity.getKey().getId();
+        if (e_id == id && (e_userId.equals(userId) || isAdmin.equals("true"))){
+          Key key = entity.getKey();
+          datastore.delete(key);
+          System.out.println("Deleted a comment");
+          break;
+        }
+      }
     }
     // Redirect back to the HTML page.
     response.sendRedirect("/feedback.html");
