@@ -52,7 +52,9 @@ public class LoginStatusServlet extends HttpServlet {
       String urlToRedirectToAfterUserLogsOut = "/feedback.html";
       String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
       loginStatus.put("url", logoutUrl);
-      String nickname = getUserNickname(userService.getCurrentUser().getUserId());
+      String userId = userService.getCurrentUser().getUserId();
+      loginStatus.put("userId", userId);
+      String nickname = getUserNickname(userId);
       loginStatus.put("nickname", nickname);
     } else {
       loginStatus.put("isLoggedIn", "false");

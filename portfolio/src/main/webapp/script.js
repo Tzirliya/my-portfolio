@@ -109,8 +109,8 @@ function getComments(quantity=g_quantity, value=g_value) {
   fetch('/data?quantity=' + quantity + '&sortBy=' + sortBy + '&sortDirection=' + sortDirection)
     .then(response => response.json())
     .then((response) => {
-      let comments = response[0];
-      let users = response[1];
+      let comments = response.comments;
+      let users = response.users;
       let comments_container = document.getElementById('comments-container');
       comments_container.innerHTML = "";
       for (let i = 0; i < comments.length; i++){
@@ -144,27 +144,50 @@ function createListElement(comment, nickname) {
   let h3Element = document.createElement('h3');
   let h5Element = document.createElement('h5');
   let pElement = document.createElement('p');
+  let spanElement = document.createElement('span');
   // Fill elements
   h3Element.innerText = comment.title;
   let dateTime = comment.postTime.split(" ");
   let date = dateTime.slice(0, 3).join(" ");
   let time = dateTime.slice(3, ).join(" ");
   h5Element.innerText = "Posted on " + date + " at " + time;
-  h5Element.innerText += "\nPosted by " + nickname;
+  if (g_currentUserId === comment.userId){
+    h5Element.innerText += "\nPosted by You as " + nickname;
+  } else {
+    h5Element.innerText += "\nPosted by " + nickname;
+  }
   pElement.innerText = comment.message;
+  spanElement.setAttribute("onclick", "deleteComment('" + comment.id + "')");
+  spanElement.setAttribute("class", "fa fa-trash-o fa-2x");
+  spanElement.setAttribute("aria-hidden", "true");
   // Add elements to the li element
   liElement.appendChild(h3Element);
   liElement.appendChild(h5Element);
   liElement.appendChild(pElement);
+  if (g_currentUserId === comment.userId || g_isAdmin === "true"){
+    liElement.appendChild(spanElement);
+  }
   return liElement;
 }
 
-// Fetches to delete all comments
+// Deletes a single comment
+function deleteComment(commentId) {
+  let parameters = new URLSearchParams('id=' + commentId);
+  console.log('/delete-some-data', parameters);
+  fetch('/delete-some-data', {method: "post", body: parameters});
+  getComments();
+};
+
+// Deletes all comments
 function deleteAllComments() {
-  console.log('/delete-data');
-  fetch('/delete-data');
+  console.log('/delete-all-data');
+  fetch('/delete-all-data');
   console.log("Deleted all comments");
 }
+
+// Global values used in multiple functions
+var g_currentUserId = "";
+var g_isAdmin = "false";
 
 // Ensures that user is logged-in in order to comment
 function verifyLogin() {
@@ -180,8 +203,9 @@ function verifyLogin() {
         console.log(loginStatus);
         console.log(typeof(loginStatus));
         if (isLoggedIn === "true") {
-          let isAdmin = loginStatus.isAdmin;
-          if (isAdmin === "true") {
+          g_currentUserId = loginStatus.userId;
+          g_isAdmin = loginStatus.isAdmin;
+          if (g_isAdmin === "true") {
             let deleteAllCommentsButton = document.getElementById('delete-all-comments-button');
             deleteAllCommentsButton.innerHTML = '<button onclick="deleteAllComments()">Delete All Comments</button>';
           }
