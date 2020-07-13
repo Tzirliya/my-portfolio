@@ -172,16 +172,18 @@ function createListElement(comment, nickname) {
 
 // Deletes a single comment
 function deleteComment(commentId) {
-  let parameters = new URLSearchParams('id=' + commentId);
-  console.log('/delete-some-data', parameters);
-  fetch('/delete-some-data', {method: "post", body: parameters});
-  getComments();
+  let parameters = new URLSearchParams('id=' + commentId + '&deleteAll=false');
+  console.log('/delete-data', parameters);
+  fetch('/delete-data', {method: "post", body: parameters});
+  console.log("Deleted a comment")
 };
 
 // Deletes all comments
 function deleteAllComments() {
-  console.log('/delete-all-data');
-  fetch('/delete-all-data');
+  let parameters = new URLSearchParams('deleteAll=true');
+  console.log('/delete-data', parameters);
+  fetch('/delete-data', {method: "post", body: parameters})
+    .then(() => getComments());
   console.log("Deleted all comments");
 }
 
@@ -207,7 +209,7 @@ function verifyLogin() {
           g_isAdmin = loginStatus.isAdmin;
           if (g_isAdmin === "true") {
             let deleteAllCommentsButton = document.getElementById('delete-all-comments-button');
-            deleteAllCommentsButton.innerHTML = '<button onclick="deleteAllComments()">Delete All Comments</button>';
+            deleteAllCommentsButton.innerHTML = '<button type="button" onclick="deleteAllComments()">Delete All Comments</button>';
           }
           postComment.style.display = "block";
           if (!nickname){
