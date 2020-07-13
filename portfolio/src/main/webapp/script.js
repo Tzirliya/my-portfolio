@@ -175,14 +175,15 @@ function deleteComment(commentId) {
   let parameters = new URLSearchParams('id=' + commentId + '&deleteAll=false');
   console.log('/delete-data', parameters);
   fetch('/delete-data', {method: "post", body: parameters});
-  getComments();
+  console.log("Deleted a comment")
 };
 
 // Deletes all comments
 function deleteAllComments() {
   let parameters = new URLSearchParams('deleteAll=true');
   console.log('/delete-data', parameters);
-  fetch('/delete-data', {method: "post", body: parameters});
+  fetch('/delete-data', {method: "post", body: parameters})
+    .then(() => getComments());
   console.log("Deleted all comments");
 }
 
