@@ -24,74 +24,60 @@ import java.util.Iterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    Collection<TimeRange> times = new ArrayList<>();
+    // TODO: Maybe use binary tree or another data structure for availableTimes 
+    // because branches split in two?
+    // TODO: Combine the repetition of calling getAvailableTimes() below so it
+    // doesn't need to repeat without optional attendees.
+    Collection<TimeRange> availableTimes = new ArrayList<>();
     Collection<String> attendees = request.getAttendees();
     Collection<String> optionalAttendees = request.getOptionalAttendees();
     Collection<String> allAttendees = new ArrayList<>(request.getAttendees());
     allAttendees.addAll(optionalAttendees);
-    long duration = (long) request.getDuration();
+    long duration = request.getDuration();
     if (duration > TimeRange.WHOLE_DAY.duration()){
-      return times;
+      return availableTimes;
     }
-    times.add(TimeRange.WHOLE_DAY);
-    if (allAttendees.isEmpty()){
-      return times;
+    availableTimes = getAvailableTimes(events, allAttendees, duration);
+    if (availableTimes.isEmpty()){
+      availableTimes = getAvailableTimes(events, attendees, duration);
     }
-    Collection<TimeRange> tempTimes;
+    return availableTimes;
+  }
+
+  private Collection<TimeRange> getAvailableTimes(Collection<Event> events, Collection<String> attendees, long duration){
+    Collection<TimeRange> availableTimes = new ArrayList<>();
+    Collection<TimeRange> pendingTimes = new ArrayList<>();
+    availableTimes.add(TimeRange.WHOLE_DAY);
+    if (attendees.isEmpty()){
+      return availableTimes;
+    }
     for (Event event: events){
-      for (String attendee: allAttendees){
+      for (String attendee: attendees){
         if (event.getAttendees().contains(attendee)){
-          tempTimes = new ArrayList<>();
-          for (Iterator<TimeRange> iterator = times.iterator(); iterator.hasNext();){
+          pendingTimes.clear();
+          Iterator<TimeRange> iterator = availableTimes.iterator();
+          while (iterator.hasNext()){
             TimeRange timeRange = iterator.next();
             if (timeRange.overlaps(event.getWhen())){
               iterator.remove();
-              int startDuration = event.getWhen().start() - timeRange.start();
-              if (startDuration >= duration){
-                TimeRange before = TimeRange.fromStartDuration(timeRange.start(), startDuration);
-                tempTimes.add(before);
+              int beforeEventDuration = event.getWhen().start() - timeRange.start();
+              if (beforeEventDuration >= duration){
+                TimeRange before = TimeRange.fromStartDuration(timeRange.start(), beforeEventDuration);
+                pendingTimes.add(before);
               }
-              int endDuration = timeRange.end() - event.getWhen().end();
-              if (endDuration >= duration){
-                TimeRange after = TimeRange.fromStartDuration(event.getWhen().end(), endDuration);
-                tempTimes.add(after);
+              int afterEventDuration = timeRange.end() - event.getWhen().end();
+              if (afterEventDuration >= duration){
+                TimeRange after = TimeRange.fromStartDuration(event.getWhen().end(), afterEventDuration);
+                pendingTimes.add(after);
               }
             }
           }
-          times.addAll(tempTimes);
+          availableTimes.addAll(pendingTimes);
         }
       }
     }
-    if (times.isEmpty()){
-      times.add(TimeRange.WHOLE_DAY);
-      if (attendees.isEmpty()){
-        return times;
-      }
-      for (Event event: events){
-        for (String attendee: attendees){
-          if (event.getAttendees().contains(attendee)){
-            tempTimes = new ArrayList<>();
-            for (Iterator<TimeRange> iterator = times.iterator(); iterator.hasNext();){
-              TimeRange timeRange = iterator.next();
-              if (timeRange.overlaps(event.getWhen())){
-                iterator.remove();
-                int startDuration = event.getWhen().start() - timeRange.start();
-                if (startDuration >= duration){
-                  TimeRange before = TimeRange.fromStartDuration(timeRange.start(), startDuration);
-                  tempTimes.add(before);
-                }
-                int endDuration = timeRange.end() - event.getWhen().end();
-                if (endDuration >= duration){
-                  TimeRange after = TimeRange.fromStartDuration(event.getWhen().end(), endDuration);
-                  tempTimes.add(after);
-                }
-              }
-            }
-            times.addAll(tempTimes);
-          }
-        }
-      }
-    }
-    return times;
+    return availableTimes;
   }
+  
+
 }
