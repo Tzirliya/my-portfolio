@@ -26,30 +26,34 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // TODO: Maybe use binary tree or another data structure for availableTimes 
     // because branches split in two?
-    // TODO: Combine the repetition of calling getAvailableTimes() below so it
-    // doesn't need to repeat without optional attendees.
     Collection<TimeRange> availableTimes = new ArrayList<>();
+    Collection<TimeRange> availableTimesWithOptional = new ArrayList<>();
+    Collection<TimeRange> availableTimesWithoutOptional;
     Collection<String> attendees = request.getAttendees();
     Collection<String> optionalAttendees = request.getOptionalAttendees();
-    Collection<String> allAttendees = new ArrayList<>(request.getAttendees());
-    allAttendees.addAll(optionalAttendees);
     long duration = request.getDuration();
     if (duration > TimeRange.WHOLE_DAY.duration()){
       return availableTimes;
     }
-    availableTimes = getAvailableTimes(events, allAttendees, duration);
-    if (availableTimes.isEmpty()){
-      availableTimes = getAvailableTimes(events, attendees, duration);
+    availableTimes.add(TimeRange.WHOLE_DAY);
+    getAvailableTimes(availableTimes, events, attendees, duration);
+    if (!availableTimes.isEmpty()){
+      availableTimesWithoutOptional = new ArrayList<>(availableTimes); // Save availableTimes without optional
+      getAvailableTimes(availableTimes, events, optionalAttendees, duration); // include optional in availableTimes
+      if (!availableTimes.isEmpty()){
+        return availableTimes;
+      } else {
+        return availableTimesWithoutOptional;
+      }
+    } else {
+      return availableTimes;
     }
-    return availableTimes;
   }
 
-  private Collection<TimeRange> getAvailableTimes(Collection<Event> events, Collection<String> attendees, long duration){
-    Collection<TimeRange> availableTimes = new ArrayList<>();
+  private void getAvailableTimes(Collection<TimeRange> availableTimes, Collection<Event> events, Collection<String> attendees, long duration){
     Collection<TimeRange> pendingTimes = new ArrayList<>();
-    availableTimes.add(TimeRange.WHOLE_DAY);
     if (attendees.isEmpty()){
-      return availableTimes;
+      return;
     }
     for (Event event: events){
       for (String attendee: attendees){
@@ -76,8 +80,6 @@ public final class FindMeetingQuery {
         }
       }
     }
-    return availableTimes;
   }
-  
 
 }
