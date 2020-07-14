@@ -24,10 +24,7 @@ import java.util.Iterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // TODO: Maybe use binary tree or another data structure for availableTimes 
-    // because branches split in two?
     Collection<TimeRange> availableTimes = new ArrayList<>();
-    Collection<TimeRange> availableTimesWithOptional = new ArrayList<>();
     Collection<TimeRange> availableTimesWithoutOptional;
     Collection<String> attendees = request.getAttendees();
     Collection<String> optionalAttendees = request.getOptionalAttendees();
@@ -38,23 +35,17 @@ public final class FindMeetingQuery {
     availableTimes.add(TimeRange.WHOLE_DAY);
     getAvailableTimes(availableTimes, events, attendees, duration);
     if (!availableTimes.isEmpty()){
-      availableTimesWithoutOptional = new ArrayList<>(availableTimes); // Save availableTimes without optional
-      getAvailableTimes(availableTimes, events, optionalAttendees, duration); // include optional in availableTimes
-      if (!availableTimes.isEmpty()){
-        return availableTimes;
-      } else {
-        return availableTimesWithoutOptional;
-      }
+      return getAvailableTimesWithMaxOptional(availableTimes, events, optionalAttendees, duration);
     } else {
       return availableTimes;
     }
   }
 
   private void getAvailableTimes(Collection<TimeRange> availableTimes, Collection<Event> events, Collection<String> attendees, long duration){
-    Collection<TimeRange> pendingTimes = new ArrayList<>();
     if (attendees.isEmpty()){
       return;
     }
+    Collection<TimeRange> pendingTimes = new ArrayList<>();
     for (Event event: events){
       for (String attendee: attendees){
         if (event.getAttendees().contains(attendee)){
@@ -80,6 +71,58 @@ public final class FindMeetingQuery {
         }
       }
     }
+  }
+
+  private Collection<TimeRange> getAvailableTimesWithMaxOptional(Collection<TimeRange> availableTimes, Collection<Event> events, Collection<String> attendees, long duration){
+    if (attendees.isEmpty()){
+      return availableTimes;
+    }
+    // Overview: There's an ArrayList containing HashSets. All TimeRanges start off in the 
+    // HashSet in the first index. For each event/attendee combination, if it doesn't conflict
+    // with a TimeRange, move that TimeRange up an index. If it partially conflicts, split
+    // the TimeRange and move up the non-conflicting TimeRange. 
+    int size = attendees.size()*events.size() + 1;
+    ArrayList<HashSet<TimeRange>> rankNumOptionalCanAttend = new ArrayList<>(size);
+    rankNumOptionalCanAttend.add(new HashSet<>(availableTimes));
+    for (int i = 1; i < size; i++){
+      rankNumOptionalCanAttend.add(new HashSet<>());
+    }
+    for (String attendee: attendees){
+      for (Event event: events){
+        if (event.getAttendees().contains(attendee)){
+          for (int i = rankNumOptionalCanAttend.size()-1; i >= 0; i--){
+            Iterator<TimeRange> iterator = rankNumOptionalCanAttend.get(i).iterator();
+            while (iterator.hasNext()){
+              TimeRange timeRange = iterator.next();
+              if (timeRange.overlaps(event.getWhen())){
+                int beforeEventDuration = event.getWhen().start() - timeRange.start();
+                if (beforeEventDuration >= duration){
+                  TimeRange before = TimeRange.fromStartDuration(timeRange.start(), beforeEventDuration);
+                  rankNumOptionalCanAttend.get(i+1).add(before);
+                }
+                int afterEventDuration = timeRange.end() - event.getWhen().end();
+                if (afterEventDuration >= duration){
+                  TimeRange after = TimeRange.fromStartDuration(event.getWhen().end(), afterEventDuration);
+                  rankNumOptionalCanAttend.get(i+1).add(after);
+                }
+              } else {
+                iterator.remove();
+                rankNumOptionalCanAttend.get(i+1).add(timeRange);
+              }
+            }
+          }
+        }
+      }
+    }
+    // Find the highest index containing TimeRanges
+    for (int i = rankNumOptionalCanAttend.size()-1; i >= 0; i--){
+      if (!rankNumOptionalCanAttend.get(i).isEmpty()){
+        ArrayList<TimeRange> ans = new ArrayList<>(rankNumOptionalCanAttend.get(i));
+        Collections.sort(ans, TimeRange.ORDER_BY_START);
+        return ans;
+      }
+    }
+    return availableTimes;
   }
 
 }
