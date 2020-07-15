@@ -398,8 +398,8 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void noMandatoryWithOptionalConsidered() {
-    // Have two optional attendees. Since they completely block off the day, both of their schedules
-    // should be ignored and the entire day should be an available slot.
+    // Have two optional attendees. Since they completely block off the day and they overlap, the 
+    // slots where they don't overlap should be suggested to minimize conflict.
     //
     // Events  : |-------A-------|     
     //                       |--------B--------|
