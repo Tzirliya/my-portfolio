@@ -79,58 +79,49 @@ public final class FindMeetingQuery {
     if (attendees.isEmpty()){
       return availableTimes;
     }
-    Hashtable<TimeRange, HashSet<String>> timeRangeEventOverlap = new Hashtable<>();
+    // Create Hashtable to hold every TimeRange and a Hashset of all attendees available at that time
+    Hashtable<TimeRange, HashSet<String>> allTimeRangesAvailableAttendees = new Hashtable<>();
     for (TimeRange timeRange: availableTimes){
-      timeRangeEventOverlap.put(timeRange, new HashSet<>(attendees));
+      allTimeRangesAvailableAttendees.put(timeRange, new HashSet<>(attendees));
     }
-    boolean overlapped;
     HashSet<String> timeRangeAvailableAttendees = new HashSet<>();
     HashSet<String> eventAttendees = new HashSet<>();
-    Hashtable<TimeRange, HashSet<String>> pendingTimeRangeEventOverlap = new Hashtable<>();
+    Hashtable<TimeRange, HashSet<String>> pendingTimeRangeAvailableAttendees = new Hashtable<>();
     for (Event event: events){
-      Collections.sort(availableTimes, TimeRange.ORDER_BY_START);
-      overlapped = false;
-      // Get all relevant attendees of event
-      eventAttendees.addAll(event.getAttendees());
-      for (String attendee: eventAttendees){
-        if (!attendees.contains(attendee)){
-          eventAttendees.remove(attendee);
-        }
-      }
-      pendingTimeRangeEventOverlap.clear();
-      Set<TimeRange> timeRanges = timeRangeEventOverlap.keySet();
+      pendingTimeRangeAvailableAttendees.clear();
+      Set<TimeRange> timeRanges = allTimeRangesAvailableAttendees.keySet();
       for (TimeRange timeRange: timeRanges){
         if (timeRange.overlaps(event.getWhen())){
-          overlapped = true;
-          timeRangeAvailableAttendees = new HashSet<>(timeRangeEventOverlap.get(timeRange));
+          timeRangeAvailableAttendees.addAll(allTimeRangesAvailableAttendees.get(timeRange));
           int beforeEventDuration = event.getWhen().start() - timeRange.start();
           if (beforeEventDuration >= duration){
             TimeRange before = TimeRange.fromStartDuration(timeRange.start(), beforeEventDuration);
-            if (pendingTimeRangeEventOverlap.get(before) == null && timeRangeEventOverlap.get(before) == null){
-              pendingTimeRangeEventOverlap.put(before, new HashSet<>(timeRangeAvailableAttendees));
+            // if the new time slot isn't already saved, save it
+            if (pendingTimeRangeAvailableAttendees.get(before) == null && allTimeRangesAvailableAttendees.get(before) == null){
+              pendingTimeRangeAvailableAttendees.put(before, new HashSet<>(timeRangeAvailableAttendees));
             }
           }
           int afterEventDuration = timeRange.end() - event.getWhen().end();
           if (afterEventDuration >= duration){
             TimeRange after = TimeRange.fromStartDuration(event.getWhen().end(), afterEventDuration);
-            if (pendingTimeRangeEventOverlap.get(after) == null && timeRangeEventOverlap.get(after) == null){
-              pendingTimeRangeEventOverlap.put(after, new HashSet<>(timeRangeAvailableAttendees));
+            // if the new time slot isn't already saved, save it
+            if (pendingTimeRangeAvailableAttendees.get(after) == null && allTimeRangesAvailableAttendees.get(after) == null){
+              pendingTimeRangeAvailableAttendees.put(after, new HashSet<>(timeRangeAvailableAttendees));
             }
           }
-          timeRangeEventOverlap.get(timeRange).removeAll(eventAttendees);
-        } else if (overlapped == true){
-          break;
+          allTimeRangesAvailableAttendees.get(timeRange).removeAll(event.getAttendees());
+          timeRangeAvailableAttendees.clear();
         }
       }
-      timeRangeEventOverlap.putAll(pendingTimeRangeEventOverlap);
-      eventAttendees.clear();
+      allTimeRangesAvailableAttendees.putAll(pendingTimeRangeAvailableAttendees);      
     }
-    Set<TimeRange> keys = timeRangeEventOverlap.keySet();
+    // Find and return the TimeRanges with the most attendees available
+    Set<TimeRange> keys = allTimeRangesAvailableAttendees.keySet();
     ArrayList<TimeRange> maximizedAvailableTimes = new ArrayList<>();
     int highestAvailable = 0;
     int numAvailable;
     for (TimeRange timeRange: keys){
-      numAvailable = timeRangeEventOverlap.get(timeRange).size();
+      numAvailable = allTimeRangesAvailableAttendees.get(timeRange).size();
       if (numAvailable > highestAvailable){
         maximizedAvailableTimes.clear();
         maximizedAvailableTimes.add(timeRange);
@@ -142,57 +133,5 @@ public final class FindMeetingQuery {
     Collections.sort(maximizedAvailableTimes, TimeRange.ORDER_BY_START);
     return maximizedAvailableTimes;
   }
-
-//   private Collection<TimeRange> getAvailableTimesWithMaxOptional(Collection<TimeRange> availableTimes, Collection<Event> events, Collection<String> attendees, long duration){
-//     if (attendees.isEmpty()){
-//       return availableTimes;
-//     }
-//     // Overview: There's an ArrayList containing HashSets. All TimeRanges start off in the 
-//     // HashSet in the first index. For each event/attendee combination, if it doesn't conflict
-//     // with a TimeRange, move that TimeRange up an index. If it partially conflicts, split
-//     // the TimeRange and move up the non-conflicting TimeRange. 
-//     int size = attendees.size()*events.size() + 1;
-//     ArrayList<HashSet<TimeRange>> rankNumOptionalCanAttend = new ArrayList<>(size);
-//     rankNumOptionalCanAttend.add(new HashSet<>(availableTimes));
-//     for (int i = 1; i < size; i++){
-//       rankNumOptionalCanAttend.add(new HashSet<>());
-//     }
-//     for (String attendee: attendees){
-//       for (Event event: events){
-//         if (event.getAttendees().contains(attendee)){
-//           for (int i = rankNumOptionalCanAttend.size()-1; i >= 0; i--){
-//             Iterator<TimeRange> iterator = rankNumOptionalCanAttend.get(i).iterator();
-//             while (iterator.hasNext()){
-//               TimeRange timeRange = iterator.next();
-//               if (timeRange.overlaps(event.getWhen())){
-//                 int beforeEventDuration = event.getWhen().start() - timeRange.start();
-//                 if (beforeEventDuration >= duration){
-//                   TimeRange before = TimeRange.fromStartDuration(timeRange.start(), beforeEventDuration);
-//                   rankNumOptionalCanAttend.get(i+1).add(before);
-//                 }
-//                 int afterEventDuration = timeRange.end() - event.getWhen().end();
-//                 if (afterEventDuration >= duration){
-//                   TimeRange after = TimeRange.fromStartDuration(event.getWhen().end(), afterEventDuration);
-//                   rankNumOptionalCanAttend.get(i+1).add(after);
-//                 }
-//               } else {
-//                 iterator.remove();
-//                 rankNumOptionalCanAttend.get(i+1).add(timeRange);
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//     // Find the highest index containing TimeRanges
-//     for (int i = rankNumOptionalCanAttend.size()-1; i >= 0; i--){
-//       if (!rankNumOptionalCanAttend.get(i).isEmpty()){
-//         ArrayList<TimeRange> ans = new ArrayList<>(rankNumOptionalCanAttend.get(i));
-//         Collections.sort(ans, TimeRange.ORDER_BY_START);
-//         return ans;
-//       }
-//     }
-//     return availableTimes;
-//   }
  
 }
