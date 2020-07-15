@@ -466,5 +466,48 @@ public final class FindMeetingQueryTest {
     Assert.assertEquals(expected, actual);
   }
 
+  @Test
+  public void oneOptionalWithManyEventsAndTwoOptionalWithOneEvent() {
+    // Have A scheduled for many events at once and B and C scheduled for the same event for
+    // rest of the day. Although there are more events, where A is scheduled should be 
+    // available because it still allows two people to join, whereas later only allows A to
+    // join.
+    //
+    // Events  : |--A--| 
+    //           |--A--| 
+    //           |--A--| 
+    //           |--A--||-----------B----------|
+    //           |--A--||-----------C----------|
+    // Day     : |-----------------------------|
+    // Options : |-----|
+    // Person A and Person B and Person C are optional attendees
+
+    Collection<Event> events = Arrays.asList(
+        new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 2", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 3", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 4", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 5", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false),
+            Arrays.asList(PERSON_A)),
+        new Event("Event 6", TimeRange.fromStartEnd(TIME_0800AM, TimeRange.END_OF_DAY, true),
+            Arrays.asList(PERSON_B, PERSON_C)));
+
+    MeetingRequest request =
+        new MeetingRequest(Arrays.asList(), DURATION_30_MINUTES);
+    request.addOptionalAttendee(PERSON_A);
+    request.addOptionalAttendee(PERSON_B);
+    request.addOptionalAttendee(PERSON_C);
+
+    Collection<TimeRange> actual = query.query(events, request);
+    Collection<TimeRange> expected =
+        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0800AM, false));
+
+    Assert.assertEquals(expected, actual);
+  }
+
 }
 
